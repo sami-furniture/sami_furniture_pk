@@ -1,22 +1,64 @@
-        <section class="py-20 md:py-32 bg-brand-bg">
-          <div class="max-w-7xl mx-auto px-5 md:px-10">
+<section id="featured" class="py-24 md:py-36 bg-brand-cream border-b border-brand-line/60">
+  <div class="max-w-7xl mx-auto px-5 md:px-10">
 
-            <div class="mb-12 md:mb-16 max-w-2xl">
-              <div class="reveal flex items-center gap-3 mb-5">
-                <span class="h-px w-8 bg-brand-wood"></span>
-                <span class="eyebrow text-brand-wood">Featured Pieces</span>
-              </div>
-              <h2 class="reveal font-display h-section text-brand-teal" style="font-weight:400;">
-                Pieces from our <span class="italic">showroom</span>.
-              </h2>
-              <p class="reveal mt-5 text-base md:text-lg text-brand-muted leading-relaxed">
-                A glimpse of the craftsmanship inside Sami Furniture House. Tap any piece to see details, or browse a full category above.
-              </p>
-            </div>
+    <!-- Header & Filter Row -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+      <div>
+        <div class="reveal flex items-center gap-3 mb-4">
+          <span class="h-px w-10 bg-brand-gold"></span>
+          <span class="eyebrow text-brand-gold-dark">Featured Pieces</span>
+        </div>
+        <h2 class="mask-reveal font-display h-section text-brand-ink font-normal leading-tight">
+          <span class="line-mask">
+            <span class="line-inner">Showroom Originals.</span>
+          </span>
+        </h2>
+        <p class="reveal mt-3 text-sm md:text-base text-brand-muted max-w-xl font-light">
+          A preview of hand-finished pieces currently gracing our Gujranwala gallery floor. Select any piece to view complete specifications and finish options.
+        </p>
+      </div>
 
-            <!-- Featured grid is populated by JavaScript from the PRODUCTS array -->
-            <div id="featuredGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"></div>
-          </div>
-        </section>
+      <!-- Category Filter Tabs -->
+      <div id="featuredFilters" class="reveal flex flex-wrap gap-2">
+        <button type="button" data-filter="all"
+                class="px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 border bg-brand-noir text-white border-brand-noir">
+          All Pieces
+        </button>
+        <button type="button" data-filter="sofas"
+                class="px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 border bg-white text-brand-muted border-brand-line hover:border-brand-gold/60">
+          Sofas
+        </button>
+        <button type="button" data-filter="beds"
+                class="px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 border bg-white text-brand-muted border-brand-line hover:border-brand-gold/60">
+          Beds
+        </button>
+        <button type="button" data-filter="tables"
+                class="px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 border bg-white text-brand-muted border-brand-line hover:border-brand-gold/60">
+          Tables
+        </button>
+        <button type="button" data-filter="chairs"
+                class="px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 border bg-white text-brand-muted border-brand-line hover:border-brand-gold/60">
+          Chairs
+        </button>
+      </div>
+    </div>
 
+    <!-- Featured Grid (Populated dynamically by featured.js) -->
+    <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 
+    <!-- Bottom Action Banner -->
+    <div class="reveal mt-16 p-8 md:p-10 rounded-2xl bg-brand-sand border border-brand-line/80 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="text-center sm:text-left">
+        <h3 class="font-display text-xl md:text-2xl font-medium text-brand-ink">Looking for a specific aesthetic or dimension?</h3>
+        <p class="text-xs md:text-sm text-brand-muted mt-1 font-light">We craft custom variations of all models shown above to fit your space precisely.</p>
+      </div>
+      <a href="https://wa.me/923294300096?text=Hi%20Sami%20Furniture%20House%2C%20I'd%20like%20to%20inquire%20about%20a%20custom%20order."
+         target="_blank" rel="noopener"
+         class="magnetic-btn btn-primary-luxury px-6 py-3.5 text-xs uppercase tracking-wider shrink-0">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <span>Request Custom Quote</span>
+      </a>
+    </div>
+
+  </div>
+</section>

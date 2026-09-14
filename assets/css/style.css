@@ -1,60 +1,455 @@
-html { scroll-behavior: smooth; }
+@charset "UTF-8";
 
-body {
-  font-family: 'Manrope', system-ui, sans-serif;
-  color: #2B2B2B;
-  background: #FAFAFA;
+/* ============================================================
+   SAMI FURNITURE HOUSE — LUXURY MOTION & DESIGN SYSTEM
+   ============================================================ */
+
+/* 1. Base Typography & Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
-::selection { background: #2E7D32; color: #fff; }
+body {
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  color: #11171D;
+  background-color: #FBF9F5;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
 
-.reveal { opacity: 0; transform: translateY(40px); }
+::selection {
+  background: #C5A880;
+  color: #0B1015;
+}
 
-.h-hero    { font-size: clamp(2.4rem, 8vw,  5.25rem); line-height: 1.02; letter-spacing: -0.02em; }
-.h-section { font-size: clamp(2rem,   6vw,  3.5rem);  line-height: 1.05; letter-spacing: -0.015em; }
-.h-cta     { font-size: clamp(2.25rem, 7vw, 4rem);    line-height: 1.05; letter-spacing: -0.02em; }
+/* 2. Top Scroll Progress Indicator */
+#scrollProgressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, #C5A880 0%, #E5D6C1 50%, #C5A880 100%);
+  z-index: 100;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+
+/* 3. Custom Fluid Cursor (Desktop Only) */
+#cursorDot,
+#cursorFollower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  will-change: transform, width, height, opacity;
+  display: none; /* Shown via JS on hover-capable devices */
+}
+
+#cursorDot {
+  width: 6px;
+  height: 6px;
+  background-color: #C5A880;
+  transition: opacity 0.3s ease, transform 0.1s ease;
+}
+
+#cursorFollower {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(197, 168, 128, 0.45);
+  background: rgba(197, 168, 128, 0.05);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.35s ease,
+              border-color 0.35s ease,
+              opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#cursorFollower span {
+  font-family: 'Manrope', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+/* Dynamic Cursor States */
+body.cursor-active #cursorFollower {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(197, 168, 128, 0.8);
+  background: rgba(197, 168, 128, 0.12);
+}
+
+body.cursor-view #cursorFollower {
+  width: 78px;
+  height: 78px;
+  background: rgba(11, 16, 21, 0.88);
+  border-color: #C5A880;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+body.cursor-view #cursorFollower span,
+body.cursor-explore #cursorFollower span {
+  opacity: 1;
+  transform: scale(1);
+}
+
+body.cursor-explore #cursorFollower {
+  width: 86px;
+  height: 86px;
+  background: rgba(11, 16, 21, 0.9);
+  border-color: #C5A880;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Hide on touch screens */
+@media (hover: none), (pointer: coarse) {
+  #cursorDot,
+  #cursorFollower {
+    display: none !important;
+  }
+}
+
+/* 4. Editorial Typography Utilities */
+.h-hero {
+  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.h-section {
+  font-size: clamp(2.1rem, 4.5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.h-cta {
+  font-size: clamp(2.2rem, 5vw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
 
 .eyebrow {
   font-size: 11px;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.img-zoom { transition: transform 1s cubic-bezier(0.22,1,0.36,1); }
-.group:hover .img-zoom { transform: scale(1.08); }
+/* 5. Masked Text & Line Reveals */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  vertical-align: top;
+}
 
-.nav-link { position: relative; }
+.line-inner {
+  display: block;
+  transform: translateY(115%);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* 6. Cinematic Image Reveals & Parallax */
+.img-mask-reveal {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(12% 0% 12% 0%);
+  opacity: 0;
+  will-change: clip-path, opacity;
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+}
+
+.img-mask-reveal.revealed {
+  clip-path: inset(0% 0% 0% 0%);
+  opacity: 1;
+}
+
+.cinematic-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.img-mask-reveal.revealed .cinematic-img {
+  transform: scale(1);
+}
+
+/* 7. General Scroll Reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  will-change: transform, opacity;
+}
+
+/* 8. Luxury Button Micro-interactions */
+.btn-primary-luxury {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #1E4E38;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s ease,
+              box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.btn-primary-luxury:hover {
+  transform: translateY(-2px);
+  background-color: #153828;
+  box-shadow: 0 15px 35px -10px rgba(30, 78, 56, 0.5);
+}
+
+.btn-primary-luxury svg {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary-luxury:hover svg {
+  transform: translateX(4px);
+}
+
+.btn-gold-luxury {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #C5A880;
+  color: #0B1015;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s ease,
+              box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.btn-gold-luxury:hover {
+  transform: translateY(-2px);
+  background-color: #D4AF37;
+  box-shadow: 0 15px 35px -10px rgba(197, 168, 128, 0.5);
+}
+
+.btn-outline-luxury {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid rgba(197, 168, 128, 0.4);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s ease,
+              border-color 0.4s ease;
+  will-change: transform;
+}
+
+.btn-outline-luxury:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #C5A880;
+}
+
+/* 9. Navigation Link Underline Effect */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
 .nav-link::after {
   content: '';
   position: absolute;
-  left: 0; right: 0; bottom: -4px;
-  height: 1px;
-  background: #2E7D32;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background: #C5A880;
   transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
   transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
 }
-.nav-link:hover::after { transform: scaleX(1); }
 
-.btn-primary {
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+/* 10. Horizontal Scroll Collection Styles */
+.horizontal-suites-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -15px rgba(46,125,50,0.55); }
 
-.map-frame { filter: saturate(0.9) contrast(1.02); }
+.horizontal-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  will-change: transform;
+}
 
+.suite-card {
+  width: clamp(300px, 32vw, 440px);
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.suite-card:hover {
+  transform: translateY(-6px);
+}
+
+/* 11. Custom Scrollbar & Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 12. Floating WhatsApp Pulse */
 .wa-pulse {
-  position: absolute; inset: 0; border-radius: 9999px;
-  background: #2E7D32; opacity: 0.4;
-  animation: pulseRing 2s ease-out infinite;
-}
-@keyframes pulseRing {
-  0% { transform: scale(1);   opacity: 0.4; }
-  100% { transform: scale(1.7); opacity: 0; }
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #2E7D32;
+  opacity: 0.45;
+  animation: pulseRing 2.5s ease-out infinite;
 }
 
-img { display: block; }
+/* 13. Map Frame */
+.map-frame {
+  filter: contrast(1.03) saturate(0.92);
+}
+
+/* 13b. Scroll-Driven Storytelling Sticky Frame */
+.story-visual-col {
+  position: relative;
+}
+
+.story-sticky-frame {
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 5rem;
+  z-index: 25;
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .story-sticky-frame {
+    top: 7rem;
+  }
+}
+
+/* 14. Hero Multi-Scene Cinematic Animation */
+.hero-scene-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.6s;
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.0);
+  transition: transform 8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.hero-slide.active .hero-slide-img {
+  transform: scale(1.08) translate(-0.8%, -0.5%);
+}
+
+/* Atmospheric Floating Light Particles */
+.hero-particle {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.6) 0%, rgba(212, 175, 55, 0) 70%);
+  filter: blur(1px);
+  pointer-events: none;
+  animation: floatParticle 14s infinite ease-in-out;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+  50% { transform: translateY(-35px) translateX(20px); opacity: 0.6; }
+  100% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+}
+
+/* 15. PREFERS-REDUCED-MOTION (ACCESSIBILITY REQUIREMENT 21) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal,
+  .line-inner,
+  .img-mask-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .hero-video-media {
+    animation: none !important;
+  }
+
+  #cursorDot,
+  #cursorFollower {
+    display: none !important;
+  }
+}

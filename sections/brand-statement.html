@@ -1,54 +1,69 @@
-        <section class="py-20 md:py-32 bg-brand-bg">
-          <div class="max-w-7xl mx-auto px-5 md:px-10 grid md:grid-cols-12 gap-10 md:gap-16 items-center">
+<section class="py-24 md:py-36 bg-brand-cream border-b border-brand-line/60">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 grid md:grid-cols-12 gap-12 md:gap-16 items-center">
 
-            <div class="md:col-span-5">
-              <div class="reveal flex items-center gap-3 mb-5">
-                <span class="h-px w-8 bg-brand-wood"></span>
-                <span class="eyebrow text-brand-wood">Our Craft</span>
-              </div>
-              <h2 class="reveal font-display h-section text-brand-teal" style="font-weight:400;">
-                Crafted in Gujranwala.<br/>
-                <span class="italic text-brand-green">Loved</span> across Pakistan.
-              </h2>
-              <p class="reveal mt-6 md:mt-7 text-base md:text-lg text-brand-muted max-w-md leading-relaxed">
-                From our Gujranwala workshop, our carpenters shape solid wood, plush upholstery and thoughtful design into furniture worth keeping. Every piece is built to be lived with — not just looked at.
-              </p>
+    <!-- Left Editorial Narrative -->
+    <div class="md:col-span-6">
+      <div class="reveal flex items-center gap-3 mb-6">
+        <span class="h-px w-10 bg-brand-gold"></span>
+        <span class="eyebrow text-brand-gold-dark">The Gujranwala Atelier</span>
+      </div>
 
-              <div class="reveal mt-8 md:mt-10 grid grid-cols-3 gap-5 md:gap-6 max-w-md">
-                <div>
-                  <div class="font-display text-3xl md:text-4xl font-medium text-brand-teal leading-none stat-number" data-target="3">0+</div>
-                  <div class="mt-2 eyebrow text-[10px] text-brand-muted leading-tight">Years Serving<br/>Pakistan</div>
-                </div>
-                <div>
-                  <div class="font-display text-3xl md:text-4xl font-medium text-brand-teal leading-none stat-number" data-target="500" data-suffix="+">0</div>
-                  <div class="mt-2 eyebrow text-[10px] text-brand-muted leading-tight">Happy<br/>Customers</div>
-                </div>
-                <div>
-                  <div class="font-display text-2xl md:text-[1.75rem] font-medium text-brand-teal leading-none whitespace-nowrap">Solid Wood</div>
-                  <div class="mt-2 eyebrow text-[10px] text-brand-muted leading-tight">Frames Built<br/>to Last</div>
-                </div>
-              </div>
-            </div>
+      <!-- Text Reveal: "Your Vision. Our Craft." (Requirement 7) -->
+      <h2 class="mask-reveal font-display h-section text-brand-ink font-normal leading-tight">
+        <span class="line-mask">
+          <span class="line-inner">Your Vision.</span>
+        </span>
+        <span class="line-mask">
+          <span class="line-inner italic font-light text-brand-gold-dark">Our Master Craft.</span>
+        </span>
+      </h2>
 
-            <div class="md:col-span-6 md:col-start-7">
-              <div class="reveal relative">
-                <div class="absolute -inset-4 md:-inset-6 rounded-3xl bg-brand-section -z-10"></div>
-                <div class="relative overflow-hidden rounded-2xl shadow-soft" style="aspect-ratio:4/5;">
-                  <img src="https://images.pexels.com/photos/5179534/pexels-photo-5179534.jpeg?auto=compress&cs=tinysrgb&w=1400&fit=crop"
-                       alt="Furniture craftsmanship" class="absolute inset-0 w-full h-full object-cover"  onerror="this.onerror=null;this.style.display='none';if(this.parentElement)this.parentElement.style.background='linear-gradient(135deg,#EFE6DD 0%,#E5D9CB 100%)';">
-                </div>
-                <div class="hidden sm:flex absolute -bottom-6 -left-6 md:-bottom-8 md:-left-8 px-5 py-4 rounded-xl bg-white shadow-xl items-center gap-3">
-                  <div class="w-10 h-10 rounded-full bg-brand-section grid place-items-center text-brand-wood">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                  </div>
-                  <div>
-                    <div class="font-display text-sm font-semibold text-brand-teal">Hand-Built</div>
-                    <div class="text-xs text-brand-muted">By master carpenters</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <p class="reveal mt-6 md:mt-8 text-base md:text-lg text-brand-muted font-light leading-relaxed">
+        Inside our Gujranwala workshop, three decades of furniture-making heritage meet contemporary architectural forms. We reject hollow boards and shortcuts; every frame is hand-mortised from kiln-seasoned hardwoods and finished with hand-rubbed organic waxes.
+      </p>
+
+      <!-- Stat Counters with GSAP Easing -->
+      <div class="reveal mt-10 grid grid-cols-3 gap-6 pt-8 border-t border-brand-line">
+        <div>
+          <div class="font-display text-3xl md:text-4xl font-medium text-brand-ink leading-none stat-number" data-target="30" data-suffix="+">0+</div>
+          <div class="mt-2.5 eyebrow text-[9px] text-brand-muted leading-tight">Years Of<br/>Heritage</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl font-medium text-brand-ink leading-none stat-number" data-target="1500" data-suffix="+">0</div>
+          <div class="mt-2.5 eyebrow text-[9px] text-brand-muted leading-tight">Homes<br/>Furnished</div>
+        </div>
+        <div>
+          <div class="font-display text-2xl md:text-3xl font-medium text-brand-gold-dark leading-none">100%</div>
+          <div class="mt-2.5 eyebrow text-[9px] text-brand-muted leading-tight">Solid Seasoned<br/>Hardwood</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Cinematic Image Mask Reveal (Requirement 3 & 9) -->
+    <div class="md:col-span-6">
+      <div class="relative">
+        <div class="absolute -inset-4 md:-inset-6 rounded-3xl bg-brand-sand -z-10"></div>
+
+        <!-- Masked Container with Counter-Scale -->
+        <div class="img-mask-reveal relative overflow-hidden rounded-2xl shadow-lift" style="aspect-ratio: 4/5;" data-cursor="VIEW">
+          <img src="https://images.pexels.com/photos/5179534/pexels-photo-5179534.jpeg?auto=compress&cs=tinysrgb&w=1600&fit=crop"
+               alt="Master carpenter working on luxury furniture"
+               class="cinematic-img"
+               onerror="this.onerror=null;this.style.display='none';if(this.parentElement)this.parentElement.style.background='linear-gradient(135deg,#F4EFEA 0%,#E8DFC5 100%)';">
+        </div>
+
+        <!-- Floating Artisan Verification Pill -->
+        <div class="reveal hidden sm:flex absolute -bottom-6 -left-6 md:-bottom-8 md:-left-8 px-6 py-4 rounded-xl bg-brand-noir text-white shadow-2xl items-center gap-4 border border-brand-gold/30">
+          <div class="w-10 h-10 rounded-full bg-brand-gold text-brand-noir grid place-items-center font-bold text-base">
+            SF
           </div>
-        </section>
+          <div>
+            <div class="font-display text-sm font-semibold text-white tracking-wide">Master Joinery</div>
+            <div class="text-[11px] text-brand-gold-light">Mortise &amp; Tenon Construction</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
+  </div>
+</section>

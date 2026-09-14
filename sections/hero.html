@@ -1,50 +1,107 @@
-        <section id="home" class="relative w-full overflow-hidden" style="min-height:640px; height:100vh;">
-          <!-- Image -->
-          <div id="heroImage" class="absolute inset-0 will-change-transform">
-            <img src="https://images.pexels.com/photos/6035357/pexels-photo-6035357.jpeg?auto=compress&cs=tinysrgb&w=2000&fit=crop"
-                 alt="Modern luxury living room" class="w-full h-full object-cover"  onerror="this.onerror=null;this.style.display='none';if(this.parentElement)this.parentElement.style.background='linear-gradient(135deg,#EFE6DD 0%,#E5D9CB 100%)';">
-          </div>
-          <!-- Gradient overlays -->
-          <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(15,61,76,0.40) 0%,rgba(15,61,76,0.18) 35%,rgba(10,28,38,0.70) 100%)"></div>
-          <div class="absolute inset-0 hidden md:block" style="background:linear-gradient(90deg,rgba(15,61,76,0.50) 0%,rgba(15,61,76,0) 55%)"></div>
+<section id="home" class="relative w-full overflow-hidden flex items-center" style="min-height: 720px; height: 100vh;">
 
-          <!-- Content -->
-          <div class="relative z-10 h-full flex items-end pb-20 md:pb-28">
-            <div class="max-w-7xl w-full mx-auto px-5 md:px-10">
-              <div class="max-w-3xl">
-                <div class="hero-eyebrow flex items-center gap-3 mb-6 opacity-0">
-                  <span class="h-px w-10 bg-brand-wood-light"></span>
-                  <span class="eyebrow text-brand-section">Est. Gujranwala · Pakistan</span>
-                </div>
-                <h1 class="hero-title font-display text-white h-hero opacity-0" style="font-weight:400;">
-                  Design Your<br/>
-                  <span class="italic font-light text-brand-section">Perfect</span> Living Space.
-                </h1>
-                <p class="hero-sub mt-6 md:mt-7 max-w-xl text-base md:text-lg text-white/80 leading-relaxed opacity-0" style="font-weight:300;">
-                  Premium, hand-crafted furniture for the modern Pakistani home. From timeless sofas to bespoke wooden beds — we build pieces that last a generation.
-                </p>
-                <div class="hero-cta mt-8 md:mt-10 flex flex-wrap items-center gap-3 md:gap-4 opacity-0">
-                  <a href="#categories"
-                     class="btn-primary group inline-flex items-center gap-2.5 px-6 md:px-7 py-3.5 md:py-4 rounded-full bg-brand-green text-white text-sm font-medium">
-                    Shop the Collection
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-500 group-hover:translate-x-1"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                  </a>
-                  <a href="https://wa.me/923294300096" target="_blank" rel="noopener"
-                     class="group inline-flex items-center gap-2.5 px-6 md:px-7 py-3.5 md:py-4 rounded-full text-sm font-medium text-white border border-white/35 hover:-translate-y-0.5 transition-transform duration-500"
-                     style="background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    Chat on WhatsApp
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+  <!-- Hero Cinematic Multi-Scene Furniture Animation (Requirement 1, 4 & 22) -->
+  <div id="heroImage" class="hero-scene-wrap absolute inset-0 will-change-transform">
 
-          <!-- Scroll cue -->
-          <div class="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-white/70">
-            <span class="eyebrow text-[10px]">Scroll</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-soft-bounce"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </section>
+    <!-- Scene 1: Modern Luxury Living Room Suite with Curved Velvet Sofa & Coffee Table -->
+    <div class="hero-slide active" data-slide-index="0">
+      <img src="https://images.pexels.com/photos/6035357/pexels-photo-6035357.jpeg?auto=compress&cs=tinysrgb&w=2400&fit=crop"
+           alt="Luxury Living Room Interior with Velvet Sofa — Sami Furniture House"
+           class="hero-slide-img">
+    </div>
 
+    <!-- Scene 2: Architectural Master Bed Suite Handcrafted in Seasoned Solid Wood -->
+    <div class="hero-slide" data-slide-index="1">
+      <img src="https://images.pexels.com/photos/15667603/pexels-photo-15667603.jpeg?auto=compress&cs=tinysrgb&w=2400&fit=crop"
+           alt="Master Bedroom Suite with Handcrafted Bed — Sami Furniture House"
+           class="hero-slide-img">
+    </div>
 
+    <!-- Scene 3: Hand-Mortised Living Room Sectional Suite -->
+    <div class="hero-slide" data-slide-index="2">
+      <img src="https://images.pexels.com/photos/4857757/pexels-photo-4857757.jpeg?auto=compress&cs=tinysrgb&w=2400&fit=crop"
+           alt="Curved Sectional Living Suite — Sami Furniture House"
+           class="hero-slide-img">
+    </div>
+
+    <!-- Scene 4: Solid Hardwood Dining Table with Architectural Chairs -->
+    <div class="hero-slide" data-slide-index="3">
+      <img src="https://images.pexels.com/photos/16790837/pexels-photo-16790837.jpeg?auto=compress&cs=tinysrgb&w=2400&fit=crop"
+           alt="Solid Wood Dining Table Suite — Sami Furniture House"
+           class="hero-slide-img">
+    </div>
+
+  </div>
+
+  <!-- Multi-layer Luxury Lighting Gradients -->
+  <div class="absolute inset-0 bg-gradient-to-t from-brand-noir via-brand-noir/45 to-transparent pointer-events-none"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-brand-noir/90 via-brand-noir/45 to-transparent hidden md:block pointer-events-none"></div>
+  <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(rgba(197,168,128,0.25) 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+  <!-- Atmospheric Floating Light Particles -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="hero-particle w-24 h-24 top-1/4 left-1/3" style="animation-delay: 0s;"></div>
+    <div class="hero-particle w-32 h-32 bottom-1/3 right-1/4" style="animation-delay: 4s;"></div>
+    <div class="hero-particle w-16 h-16 top-1/3 right-1/3" style="animation-delay: 8s;"></div>
+  </div>
+
+  <!-- Hero Content Frame -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-10 pt-24 pb-16 md:pb-24 flex flex-col justify-end h-full">
+    <div class="max-w-3xl">
+
+      <!-- Eyebrow Badge (Requirement 1) -->
+      <div class="hero-badge inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 mb-6 opacity-0">
+        <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+        <span class="eyebrow text-[10px] text-brand-gold-light tracking-widest-2">Atelier &amp; Showroom · Gujranwala, Pakistan</span>
+      </div>
+
+      <!-- Progressive Masked Headline (Requirement 1 & 7) -->
+      <h1 class="hero-title font-display text-white h-hero font-normal tracking-tight">
+        <span class="line-mask">
+          <span class="line-inner">Architecture of</span>
+        </span>
+        <span class="line-mask">
+          <span class="line-inner italic font-light text-brand-gold">Timeless Living.</span>
+        </span>
+      </h1>
+
+      <!-- Supporting Editorial Subtext (Requirement 1) -->
+      <p class="hero-sub mt-6 md:mt-7 max-w-xl text-base md:text-lg text-white/80 font-light leading-relaxed opacity-0">
+        Handcrafted in Gujranwala with seasoned solid teak and sheesham wood, architectural joinery, and tailored upholstery. Built to outlive trends and last for generations.
+      </p>
+
+      <!-- Staggered CTA Group (Requirement 1 & 10, 11) -->
+      <div class="hero-cta mt-8 md:mt-10 flex flex-wrap items-center gap-3.5 md:gap-4">
+        <a href="#collectionSuitesSection"
+           class="hero-cta-btn magnetic-btn btn-gold-luxury px-7 md:px-8 py-4 text-xs md:text-sm uppercase tracking-wider opacity-0">
+          <span>Explore The Suites</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <a href="https://wa.me/923294300096?text=Hi%20Sami%20Furniture%20House%2C%20I'd%20like%20to%20consult%20for%20custom%20furniture."
+           target="_blank" rel="noopener"
+           class="hero-cta-btn magnetic-btn btn-outline-luxury px-7 md:px-8 py-4 text-xs md:text-sm uppercase tracking-wider opacity-0">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>Bespoke Order</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Atmosphere & Scene Switcher Controls -->
+  <div class="absolute bottom-6 right-5 md:right-10 z-20 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-noir/70 backdrop-blur-md border border-white/10 text-xs text-white/80">
+    <span class="text-[10px] text-brand-gold uppercase tracking-widest mr-2 font-semibold">Suites:</span>
+    <button type="button" data-hero-dot="0" class="hero-dot px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-all duration-300 bg-brand-gold text-brand-noir font-bold">01 Living</button>
+    <button type="button" data-hero-dot="1" class="hero-dot px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-all duration-300 text-white/60 hover:text-white">02 Bedroom</button>
+    <button type="button" data-hero-dot="2" class="hero-dot px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-all duration-300 text-white/60 hover:text-white">03 Sectional</button>
+    <button type="button" data-hero-dot="3" class="hero-dot px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-all duration-300 text-white/60 hover:text-white">04 Dining</button>
+  </div>
+
+  <!-- Bottom Scroll Cue (Requirement 1) -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-2 text-white/50 hover:text-white/80 transition-colors">
+    <span class="eyebrow text-[9px] tracking-widest-3">Scroll to Explore</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-soft-bounce text-brand-gold"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+
+</section>

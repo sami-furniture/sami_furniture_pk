@@ -3,37 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0F3D4C" />
-  <title>Sami Furniture House — Premium Furniture, Crafted in Gujranwala</title>
-  <meta name="description" content="Premium, hand-crafted furniture for the modern Pakistani home. Sofas, beds, dining sets and office furniture, designed and built in Gujranwala." />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#0B1015" />
+  <title>Sami Furniture House — Luxury Handcrafted Furniture, Gujranwala</title>
+  <meta name="description" content="Pakistan's premier solid wood furniture atelier. Handcrafted luxury bed sets, bespoke sofas, dining tables, and architectural interiors in Gujranwala." />
 
   <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="assets/img/logo.jpg" />
   <link rel="apple-touch-icon" href="assets/img/logo.jpg" />
 
-  <!-- Open Graph / Facebook / WhatsApp Preview -->
+  <!-- Open Graph / WhatsApp Preview -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Sami Furniture House — Premium Furniture, Crafted in Gujranwala" />
-  <meta property="og:description" content="Premium, hand-crafted furniture for the modern Pakistani home. Sofas, beds, dining sets and office furniture, designed and built in Gujranwala." />
+  <meta property="og:title" content="Sami Furniture House — Luxury Handcrafted Furniture, Gujranwala" />
+  <meta property="og:description" content="Pakistan's premier solid wood furniture atelier. Handcrafted luxury bed sets, bespoke sofas, dining tables, and architectural interiors in Gujranwala." />
   <meta property="og:image" content="assets/img/logo.jpg" />
   <meta property="og:locale" content="en_PK" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Sami Furniture House — Premium Furniture, Crafted in Gujranwala" />
-  <meta name="twitter:description" content="Premium, hand-crafted furniture for the modern Pakistani home. Designed and built in Gujranwala." />
+  <meta name="twitter:title" content="Sami Furniture House — Luxury Handcrafted Furniture" />
+  <meta name="twitter:description" content="Handcrafted luxury bed sets, bespoke sofas, and architectural furniture built in Gujranwala, Pakistan." />
   <meta name="twitter:image" content="assets/img/logo.jpg" />
 
-  <!-- Local Business Structured Data (Schema.org) for Google -->
+  <!-- Local Business Structured Data (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FurnitureStore",
     "name": "Sami Furniture House",
-    "description": "Premium, hand-crafted furniture for the modern Pakistani home. Sofas, beds, dining sets and office furniture, designed and built in Gujranwala.",
+    "description": "Pakistan's premier solid wood furniture atelier. Handcrafted luxury bed sets, bespoke sofas, dining tables, and architectural interiors in Gujranwala.",
     "image": "assets/img/logo.jpg",
     "telephone": "+923294300096",
-    "priceRange": "$$",
+    "priceRange": "$$$",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Main GT Road, Opp. Kings Mall, Near A+ School System, Wapda Town",
@@ -62,32 +63,38 @@
   }
   </script>
 
-  <!-- Fonts -->
+  <!-- Typography: Cinzel (Luxury Display Serif), Fraunces (Editorial Accent), Manrope (Modern Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind Play CDN + custom theme -->
+  <!-- Tailwind Play CDN + Custom Theme -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="assets/js/tailwind.config.js"></script>
 
-  <!-- Project styles -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <!-- Project Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2.2" />
 </head>
 
-<body class="font-body bg-brand-bg text-brand-ink">
+<body class="font-body bg-brand-bg text-brand-ink antialiased">
+
+  <!-- Top Scroll Progress Bar (Requirement 17) -->
+  <div id="scrollProgressBar"></div>
+
+  <!-- Custom Fluid Dual-Ring Cursor (Requirement 12) -->
+  <div id="cursorDot"></div>
+  <div id="cursorFollower"><span></span></div>
 
   <!-- ============================================================
-       PAGE COMPOSITION
-       ============================================================
-       Each slot below is replaced at runtime with the matching
-       partial from /sections/<name>.html by assets/js/sections.js.
+       MODULAR SECTION SLOTS (Loaded in order via sections.js)
        ============================================================ -->
   <div data-include="navbar"></div>
   <div data-include="hero"></div>
   <div data-include="brand-statement"></div>
   <div data-include="categories"></div>
+  <div data-include="storytelling"></div>
   <div data-include="featured-pieces"></div>
+  <div data-include="custom-furniture"></div>
   <div data-include="why-choose-us"></div>
   <div data-include="showroom"></div>
   <div data-include="testimonials"></div>
@@ -96,35 +103,32 @@
   <div data-include="product-gallery-modal"></div>
   <div data-include="floating-whatsapp"></div>
 
-
   <!-- ============================================================
-       SCRIPTS
+       SCRIPTS & MOTION ENGINE
        ============================================================ -->
-  <!-- GSAP for animations -->
+  <!-- GSAP 3 & ScrollTrigger for 60fps GPU-Accelerated Animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- App scripts (load order matters) -->
-  <script src="assets/js/sections.js"></script>
-  <script src="assets/js/data.js"></script>
+  <!-- Core Data & Section Loader -->
+  <script src="assets/js/sections.js?v=2.2"></script>
+  <script src="assets/js/data.js?v=2.2"></script>
 
-  <!-- The remaining scripts must wait until the sections are
-       in the DOM. sections.js fires a `sections:loaded` event
-       once all partials are injected. -->
+  <!-- Dynamic Section Event Listener -->
   <script>
     document.addEventListener('sections:loaded', function () {
-      // Load scripts that bind to DOM elements
+      const v = '?v=2.2';
       const scripts = [
-        'assets/js/ui.js',
-        'assets/js/modal.js',
-        'assets/js/featured.js',
-        'assets/js/animations.js',
-        'assets/js/main.js',
+        'assets/js/ui.js' + v,
+        'assets/js/modal.js' + v,
+        'assets/js/featured.js' + v,
+        'assets/js/animations.js' + v,
+        'assets/js/main.js' + v,
       ];
       scripts.forEach(function (src) {
         const s = document.createElement('script');
         s.src = src;
-        s.defer = false;
+        s.async = false;
         document.body.appendChild(s);
       });
     });
