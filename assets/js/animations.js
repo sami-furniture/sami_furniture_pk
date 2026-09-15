@@ -361,6 +361,18 @@
       if (pill) {
         pill.textContent = `Stage 0${index + 1} / 05`;
       }
+
+      // 4. Highlight Stage 4 Companion Visual when reaching Stage 5 on desktop
+      const stage4Card = section.querySelector('#stage4CompanionCard');
+      if (stage4Card) {
+        if (index === 4) {
+          stage4Card.classList.add('border-brand-gold', 'shadow-gold', 'scale-[1.02]');
+          stage4Card.classList.remove('border-brand-gold/30');
+        } else {
+          stage4Card.classList.remove('border-brand-gold', 'shadow-gold', 'scale-[1.02]');
+          stage4Card.classList.add('border-brand-gold/30');
+        }
+      }
     }
 
     // Set initial stage

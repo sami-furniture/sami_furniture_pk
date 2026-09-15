@@ -436,6 +436,22 @@ body.cursor-explore #cursorFollower {
   100% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
 }
 
+/* Custom Luxury Scrollbar for Modal & Overflow Containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(11, 16, 21, 0.6);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(197, 168, 128, 0.35);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 168, 128, 0.75);
+}
+
 /* 15. PREFERS-REDUCED-MOTION (ACCESSIBILITY REQUIREMENT 21) */
 @media (prefers-reduced-motion: reduce) {
   *,
