@@ -356,21 +356,32 @@ body.cursor-explore #cursorFollower {
 }
 
 /* 13b. Scroll-Driven Storytelling Sticky Frame */
-.story-visual-col {
-  position: relative;
-}
-
-.story-sticky-frame {
-  position: -webkit-sticky !important;
-  position: sticky !important;
-  top: 5rem;
-  z-index: 25;
-  will-change: transform;
+@media (max-width: 767.98px) {
+  .story-visual-col {
+    display: none !important;
+  }
 }
 
 @media (min-width: 768px) {
+  /* Desktop: Side-by-side grid column stretches full height, frame sticks beside scrolling steps */
+  .story-visual-col {
+    display: block !important;
+    position: relative !important;
+    align-self: stretch !important;
+    height: auto !important;
+  }
+
   .story-sticky-frame {
-    top: 7rem;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 7rem !important; /* 112px below desktop header */
+    z-index: 25 !important;
+    will-change: transform;
+  }
+
+  .story-steps-col {
+    position: relative;
+    z-index: 10;
   }
 }
 

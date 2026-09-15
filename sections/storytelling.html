@@ -24,12 +24,19 @@
       </p>
     </div>
 
-    <!-- Storytelling Container: Full-Height Grid -->
-    <div class="grid md:grid-cols-12 gap-10 md:gap-16 relative">
+    <!-- Storytelling Container -->
+    <div class="grid md:grid-cols-12 gap-10 md:gap-16 relative story-process-container">
 
-      <!-- Sticky Image Column (Remains pinned through all 5 stages) -->
-      <div class="md:col-span-6 relative h-full story-visual-col">
-        <div class="story-sticky-frame sticky top-20 md:top-28 z-20 relative w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-brand-noir-light aspect-[16/10] sm:aspect-[4/3] md:aspect-[4/5] max-h-[44vh] md:max-h-[70vh]" data-cursor="VIEW">
+      <!-- Desktop Sticky Image Column (Hidden on mobile; sticky pinned on desktop >= 768px) -->
+      <div class="hidden md:block md:col-span-6 story-visual-col">
+        <div class="story-sticky-frame sticky top-28 z-20 w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-brand-noir aspect-[4/5] max-h-[72vh]" data-cursor="VIEW">
+
+          <!-- Active Stage Pill Badge -->
+          <div class="absolute top-3.5 right-3.5 z-10">
+            <span id="storyStageIndicator" class="px-3 py-1 rounded-full bg-brand-noir/85 backdrop-blur-md border border-brand-gold/40 text-[10px] font-semibold text-brand-gold tracking-wider uppercase shadow-gold">
+              Stage 01 / 05
+            </span>
+          </div>
 
           <!-- 01 Raw Timber Visual -->
           <img src="https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=1400"
@@ -72,11 +79,11 @@
         </div>
       </div>
 
-      <!-- Scrolling Narrative Steps (Right Side) -->
-      <div class="md:col-span-6 story-steps-col space-y-28 md:space-y-40 py-8 md:py-12 pb-32 md:pb-48">
+      <!-- Scrolling Narrative Steps (Full width on mobile, 6 cols on desktop) -->
+      <div class="col-span-12 md:col-span-6 story-steps-col space-y-16 md:space-y-40 py-4 md:py-12 pb-24 md:pb-64">
 
         <!-- Stage 01 -->
-        <div class="story-step relative pl-8 md:pl-10 border-l border-white/15 transition-all duration-500 active-step">
+        <div class="story-step relative pl-7 sm:pl-8 md:pl-10 border-l border-white/15 transition-all duration-500 active-step">
           <div class="step-bullet absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-brand-gold text-brand-noir border border-brand-gold grid place-items-center font-bold text-xs shadow-gold transition-all duration-300">
             01
           </div>
@@ -85,10 +92,23 @@
           <p class="mt-4 text-sm md:text-base text-white/70 leading-relaxed font-light">
             We exclusively harvest kiln-dried, seasoned Sheesham (Rosewood) and Teak. By rigorously testing moisture content below 10%, we eliminate warping, cracking, or seasonal expansion in Pakistan’s changing weather.
           </p>
+
+          <!-- Mobile In-Between Visual (Between Stage 01 and Stage 02) -->
+          <div class="block md:hidden mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-brand-noir relative aspect-[16/10]">
+            <img src="https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                 alt="Kiln-dried raw hardwood timber"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-xs">
+              <span class="eyebrow text-[10px] text-brand-gold tracking-wider">Phase 01</span>
+              <span class="text-white/80 font-light text-[11px]">Kiln-Dried Timber</span>
+            </div>
+          </div>
         </div>
 
         <!-- Stage 02 -->
-        <div class="story-step relative pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
+        <div class="story-step relative pl-7 sm:pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
           <div class="step-bullet absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-brand-noir-light text-white/40 border border-white/10 grid place-items-center font-bold text-xs transition-all duration-300">
             02
           </div>
@@ -97,10 +117,23 @@
           <p class="mt-4 text-sm md:text-base text-white/70 leading-relaxed font-light">
             Master woodworkers cut mortise-and-tenon joints, interlocking timber pieces mechanically rather than relying solely on nails. Heavy load points are reinforced to endure decades of daily living.
           </p>
+
+          <!-- Mobile In-Between Visual (Between Stage 02 and Stage 03) -->
+          <div class="block md:hidden mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-brand-noir relative aspect-[16/10]">
+            <img src="assets/img/chair-6.jpeg"
+                 alt="Master solid wood joinery and raw frame assembly in Gujranwala"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-xs">
+              <span class="eyebrow text-[10px] text-brand-gold tracking-wider">Phase 02</span>
+              <span class="text-white/80 font-light text-[11px]">Hand-Carved Joinery</span>
+            </div>
+          </div>
         </div>
 
         <!-- Stage 03 -->
-        <div class="story-step relative pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
+        <div class="story-step relative pl-7 sm:pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
           <div class="step-bullet absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-brand-noir-light text-white/40 border border-white/10 grid place-items-center font-bold text-xs transition-all duration-300">
             03
           </div>
@@ -109,10 +142,23 @@
           <p class="mt-4 text-sm md:text-base text-white/70 leading-relaxed font-light">
             Surfaces are sanded through five progressive grits of paper, followed by multiple coats of hand-rubbed natural oils or Italian polyurethane lacquers to celebrate the wood's deep organic grain.
           </p>
+
+          <!-- Mobile In-Between Visual (Between Stage 03 and Stage 04) -->
+          <div class="block md:hidden mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-brand-noir relative aspect-[16/10]">
+            <img src="https://images.pexels.com/photos/6588592/pexels-photo-6588592.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                 alt="Fine sanding and hand-rubbed polishing"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-xs">
+              <span class="eyebrow text-[10px] text-brand-gold tracking-wider">Phase 03</span>
+              <span class="text-white/80 font-light text-[11px]">Organic Hand Polish</span>
+            </div>
+          </div>
         </div>
 
         <!-- Stage 04 -->
-        <div class="story-step relative pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
+        <div class="story-step relative pl-7 sm:pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
           <div class="step-bullet absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-brand-noir-light text-white/40 border border-white/10 grid place-items-center font-bold text-xs transition-all duration-300">
             04
           </div>
@@ -121,10 +167,23 @@
           <p class="mt-4 text-sm md:text-base text-white/70 leading-relaxed font-light">
             High-density imported HR foam, reinforced webbing, and hand-selected velvet, chenille, or top-grain leather are tailored seamlessly. Every seam is double-stitched for structural permanence.
           </p>
+
+          <!-- Mobile In-Between Visual (Between Stage 04 and Stage 05) -->
+          <div class="block md:hidden mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-brand-noir relative aspect-[16/10]">
+            <img src="assets/img/dewan-3.jpeg"
+                 alt="Deep diamond button tufting and luxury upholstery"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-xs">
+              <span class="eyebrow text-[10px] text-brand-gold tracking-wider">Phase 04</span>
+              <span class="text-white/80 font-light text-[11px]">Tufted Master Upholstery</span>
+            </div>
+          </div>
         </div>
 
         <!-- Stage 05 -->
-        <div class="story-step relative pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
+        <div class="story-step relative pl-7 sm:pl-8 md:pl-10 border-l border-white/15 transition-all duration-500">
           <div class="step-bullet absolute -left-3.5 top-0 w-7 h-7 rounded-full bg-brand-noir-light text-white/40 border border-white/10 grid place-items-center font-bold text-xs transition-all duration-300">
             05
           </div>
@@ -133,10 +192,24 @@
           <p class="mt-4 text-sm md:text-base text-white/70 leading-relaxed font-light">
             White-glove delivery across Pakistan. Our team handles transit, uncrating, and precision placement inside your home so your space is immediately transformed.
           </p>
-          <div class="mt-6">
+
+          <!-- Mobile In-Between Visual (Below Stage 05) -->
+          <div class="block md:hidden mt-6 rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-brand-noir relative aspect-[16/10]">
+            <img src="assets/img/dewan-2.jpeg"
+                 alt="Architectural curved daybed installed in modern luxury sanctuary"
+                 class="w-full h-full object-cover"
+                 loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 flex items-center justify-between text-xs">
+              <span class="eyebrow text-[10px] text-brand-gold tracking-wider">Phase 05</span>
+              <span class="text-white/80 font-light text-[11px]">Completed Living Sanctuary</span>
+            </div>
+          </div>
+
+          <div class="mt-8">
             <a href="https://wa.me/923294300096?text=Hi%20Sami%20Furniture%20House%2C%20I'd%20like%20to%20commission%20a%20custom%20piece."
                target="_blank" rel="noopener"
-               class="btn-gold-luxury px-6 py-3 text-xs tracking-wider uppercase inline-flex items-center gap-2">
+               class="btn-gold-luxury px-6 py-3.5 text-xs tracking-wider uppercase inline-flex items-center gap-2">
               <span>Commission Your Piece</span>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>

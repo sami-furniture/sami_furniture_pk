@@ -312,40 +312,29 @@
 
     const steps = section.querySelectorAll('.story-step');
     const images = section.querySelectorAll('.story-visual-img');
-    const stickyFrame = section.querySelector('.story-sticky-frame');
-    const stepsCol = section.querySelector('.story-steps-col');
+    const pill = section.querySelector('#storyStageIndicator');
 
     if (steps.length === 0 || images.length === 0) return;
 
-    // Desktop GSAP Pinning: Keep the image frame pinned while all 5 narrative steps scroll
-    if (window.innerWidth >= 768 && stickyFrame && stepsCol && !prefersReducedMotion) {
-      ScrollTrigger.create({
-        trigger: stepsCol,
-        start: 'top 112px',
-        end: 'bottom bottom',
-        pin: stickyFrame,
-        pinSpacing: false,
-        invalidateOnRefresh: true,
-      });
-    }
-
-    // Switch active visual based on scroll
+    // Switch active visual based on scroll (responsive thresholds for mobile and desktop)
     steps.forEach((step, idx) => {
       ScrollTrigger.create({
         trigger: step,
-        start: 'top 60%',
-        end: 'bottom 40%',
+        start: () => window.innerWidth < 768 ? 'top 75%' : 'top 55%',
+        end: () => window.innerWidth < 768 ? 'bottom 25%' : 'bottom 45%',
         onEnter: () => setActiveStep(idx),
         onEnterBack: () => setActiveStep(idx),
       });
     });
 
     function setActiveStep(index) {
+      // 1. Highlight current step bullet & text
       steps.forEach((s, i) => {
-        s.classList.toggle('active-step', i === index);
+        const isActive = (i === index);
+        s.classList.toggle('active-step', isActive);
         const indicator = s.querySelector('.step-bullet');
         if (indicator) {
-          if (i === index) {
+          if (isActive) {
             indicator.classList.remove('bg-brand-noir-light', 'text-white/40', 'border-white/10');
             indicator.classList.add('bg-brand-gold', 'text-brand-noir', 'border-brand-gold', 'scale-110');
           } else {
@@ -355,6 +344,7 @@
         }
       });
 
+      // 2. Cross-fade images smoothly
       images.forEach((img, i) => {
         if (i === index) {
           img.style.opacity = '1';
@@ -366,7 +356,15 @@
           img.style.zIndex = '1';
         }
       });
+
+      // 3. Update pill badge: Stage 01 / 05 ... Stage 05 / 05
+      if (pill) {
+        pill.textContent = `Stage 0${index + 1} / 05`;
+      }
     }
+
+    // Set initial stage
+    setActiveStep(0);
   }
 
   /* ------------------------------------------------------------
