@@ -118,10 +118,15 @@
   /* ------------------------------------------------------------
      3. Magnetic CTA Micro-Interactions (Requirement 11)
      ------------------------------------------------------------ */
+  let magneticButtonsInitialized = false;
   function initMagneticButtons() {
+    if (magneticButtonsInitialized) return;
     if (prefersReducedMotion || window.matchMedia('(hover: none)').matches) return;
 
     const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    if (magneticBtns.length === 0) return;
+    magneticButtonsInitialized = true;
+
     magneticBtns.forEach((btn) => {
       btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
@@ -142,11 +147,17 @@
   /* ------------------------------------------------------------
      4. GSAP & ScrollTrigger Animations
      ------------------------------------------------------------ */
+  let gsapInitialized = false;
   function initGSAPAnimations() {
+    if (gsapInitialized) return;
     if (typeof gsap === 'undefined') return;
     if (typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
     }
+
+    // Verify sections have loaded
+    if (!document.getElementById('home') && !document.getElementById('collectionSuitesSection')) return;
+    gsapInitialized = true;
 
     if (prefersReducedMotion) {
       document.querySelectorAll('.reveal, .line-inner, .img-mask-reveal').forEach((el) => {
@@ -257,49 +268,114 @@
 
   /* ------------------------------------------------------------
      5. Horizontal Collection Suites (Requirement 6)
-     Desktop: Pinned scrub | Mobile: Native touch swipe
+     Fluid lookbook carousel with controls, touch-swipe & mouse drag
      ------------------------------------------------------------ */
   function initHorizontalCollection() {
     const container = document.getElementById('collectionSuitesSection');
     const track = document.getElementById('collectionTrack');
+    const scrollWrapper = document.getElementById('collectionScrollWrapper') || (track ? track.parentElement : null);
     const progressBar = document.getElementById('suiteScrollProgress');
-    if (!container || !track) return;
+    if (!container || !track || !scrollWrapper) return;
 
-    // Desktop Pinning (1024px and wider)
-    if (window.innerWidth >= 1024 && !prefersReducedMotion) {
-      const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 120);
+    if (container.dataset.suiteInitialized === 'true') return;
+    container.dataset.suiteInitialized = 'true';
 
-      const tween = gsap.to(track, {
-        x: getScrollAmount,
-        ease: 'none',
-      });
-
-      ScrollTrigger.create({
-        trigger: container,
-        start: 'top top',
-        end: () => `+=${track.scrollWidth - window.innerWidth + 400}`,
-        pin: true,
-        animation: tween,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (progressBar) {
-            progressBar.style.width = `${Math.round(self.progress * 100)}%`;
-          }
-        },
-      });
+    // Update progress bar based on horizontal scroll
+    function updateSuiteProgress() {
+      if (!progressBar || !scrollWrapper) return;
+      const maxScroll = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
+      if (maxScroll <= 0) {
+        progressBar.style.width = '100%';
+        return;
+      }
+      const ratio = Math.max(0, Math.min(1, scrollWrapper.scrollLeft / maxScroll));
+      const pct = Math.round(20 + ratio * 80);
+      progressBar.style.width = `${pct}%`;
     }
 
-    // Prev / Next Navigation Buttons (Works on all screen sizes)
+    scrollWrapper.addEventListener('scroll', updateSuiteProgress, { passive: true });
+    window.addEventListener('resize', updateSuiteProgress, { passive: true });
+    updateSuiteProgress();
+
+    // Determine one-card scroll step
+    function getScrollStep() {
+      const firstCard = track.querySelector('.suite-card');
+      return firstCard ? firstCard.offsetWidth + 24 : 380;
+    }
+
+    // Prev / Next Navigation Buttons
     const prevBtn = document.getElementById('btnSuitePrev');
     const nextBtn = document.getElementById('btnSuiteNext');
     if (prevBtn && nextBtn) {
-      prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -340, behavior: 'smooth' });
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollWrapper.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
       });
-      nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: 340, behavior: 'smooth' });
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollWrapper.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
       });
+    }
+
+    // Mouse Drag-To-Scroll (Desktop lookbook browsing)
+    let isDown = false;
+    let startX = 0;
+    let scrollLeftPos = 0;
+    let hasMoved = false;
+
+    scrollWrapper.addEventListener('mousedown', (e) => {
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      isDown = true;
+      hasMoved = false;
+      startX = e.pageX - scrollWrapper.offsetLeft;
+      scrollLeftPos = scrollWrapper.scrollLeft;
+      scrollWrapper.classList.add('cursor-grabbing');
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDown) {
+        isDown = false;
+        scrollWrapper.classList.remove('cursor-grabbing');
+      }
+    });
+
+    scrollWrapper.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - scrollWrapper.offsetLeft;
+      const walk = (x - startX) * 1.3;
+      if (Math.abs(walk) > 6) hasMoved = true;
+      scrollWrapper.scrollLeft = scrollLeftPos - walk;
+    });
+
+    // Prevent accidental clicks on cards during a drag gesture
+    track.querySelectorAll('.suite-card').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        if (hasMoved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, true);
+    });
+
+    // Subtle entrance animation when section enters viewport
+    if (typeof gsap !== 'undefined' && !prefersReducedMotion) {
+      gsap.fromTo(track.querySelectorAll('.suite-card'),
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true,
+          },
+        }
+      );
     }
   }
 
@@ -309,6 +385,8 @@
   function initStorytelling() {
     const section = document.getElementById('craftStorySection');
     if (!section) return;
+    if (section.dataset.storyInitialized === 'true') return;
+    section.dataset.storyInitialized = 'true';
 
     const steps = section.querySelectorAll('.story-step');
     const images = section.querySelectorAll('.story-visual-img');
@@ -519,10 +597,13 @@
   /* ------------------------------------------------------------
      Hero Multi-Scene Animated Carousel
      ------------------------------------------------------------ */
+  let heroScenesInitialized = false;
   function initHeroScenes() {
+    if (heroScenesInitialized) return;
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
     if (slides.length <= 1) return;
+    heroScenesInitialized = true;
 
     let current = 0;
     let timer = null;
@@ -567,7 +648,18 @@
   /* ------------------------------------------------------------
      Initialization on DOM Ready & sections:loaded
      ------------------------------------------------------------ */
+  let allInitialized = false;
+
   function initAll() {
+    if (allInitialized) return;
+
+    // Verify sections have been loaded into DOM before marking ready
+    const suites = document.getElementById('collectionSuitesSection');
+    const story = document.getElementById('craftStorySection');
+    if (!suites || !story) return;
+
+    allInitialized = true;
+
     initScrollProgress();
     initCustomCursor();
     initMagneticButtons();
@@ -579,11 +671,12 @@
 
   window.initStorytelling = initStorytelling;
 
-  document.addEventListener('sections:loaded', initAll);
-
-  // Fallback in case sections are already rendered
-  if (document.readyState === 'complete' || document.readyState === 'interactive' || document.documentElement.dataset.sectionsReady === 'true') {
+  document.addEventListener('sections:loaded', () => {
     initAll();
-    setTimeout(initAll, 200);
+  });
+
+  // Run if sections were already rendered before script executed
+  if (document.documentElement.dataset.sectionsReady === 'true' || document.readyState === 'complete') {
+    initAll();
   }
 })();
