@@ -406,7 +406,6 @@
     const watermark = section.querySelector('#storyWatermark');
     const textEyebrow = section.querySelector('#storyTextEyebrow');
     const textTitle = section.querySelector('#storyTextTitle');
-    const textDesc = section.querySelector('#storyTextDesc');
     const specsContainer = section.querySelector('#storySpecsContainer');
 
     // Control Elements
@@ -422,7 +421,6 @@
         stage: '01',
         phaseEyebrow: 'Step 01 · Wood Quality',
         title: 'Seasoned Solid Wood Selection',
-        desc: 'We only use kiln-dried, seasoned Sheesham (Rosewood) and Teak. We test moisture levels below 10%, which stops the wood from bending, cracking, or expanding in changing weather.',
         visualTitle: 'Seasoned Solid Wood Planks',
         badge: 'Seasoned Wood',
         atelier: 'Gujranwala Workshop',
@@ -432,7 +430,6 @@
         stage: '02',
         phaseEyebrow: 'Step 02 · Wood Structure',
         title: 'Solid Wood Framing & Joints',
-        desc: 'Our master carpenters cut traditional mortise-and-tenon interlocking joints. The wood pieces lock together mechanically rather than relying only on nails, giving your furniture decades of strength.',
         visualTitle: 'Master Hand Joinery',
         badge: 'Interlocking Joints',
         atelier: 'Gujranwala Workshop',
@@ -442,7 +439,6 @@
         stage: '03',
         phaseEyebrow: 'Step 03 · Hand Finishing',
         title: 'Hand Sanding & Smooth Polish',
-        desc: 'Every surface is sanded by hand through five progressive grades of sandpaper, followed by multiple coats of natural oils or Italian lacquer to highlight the natural wood grain and give a rich, smooth finish.',
         visualTitle: 'Hand-Rubbed Lacquer Finish',
         badge: 'Natural Grain',
         atelier: 'Polishing Studio',
@@ -452,7 +448,6 @@
         stage: '04',
         phaseEyebrow: 'Step 04 · Cushioning & Fabric',
         title: 'Comfort Foam & Luxury Upholstery',
-        desc: 'We use high-density imported Molty/HR foam with heavy-duty webbing and premium velvet or leatherette, carefully stitched with double-layered seams for lasting comfort and shape.',
         visualTitle: 'Master Button Tufting',
         badge: 'Luxury Fabric',
         atelier: 'Upholstery Team',
@@ -462,7 +457,6 @@
         stage: '05',
         phaseEyebrow: 'Step 05 · Safe Delivery',
         title: 'Delivered & Set Up in Your Home',
-        desc: 'Safe delivery across Pakistan. Our team handles transport, unboxing, and places the furniture directly in your room so you can enjoy your new space right away without any hassle.',
         visualTitle: 'Placed in Your Home',
         badge: 'Delivered & Set Up',
         atelier: 'All Pakistan Delivery',
@@ -539,13 +533,6 @@
           textTitle.style.opacity = '1';
           textTitle.style.transform = 'translateY(0)';
         }, 120);
-      }
-      if (textDesc) {
-        textDesc.style.opacity = '0';
-        setTimeout(() => {
-          textDesc.textContent = data.desc;
-          textDesc.style.opacity = '1';
-        }, 150);
       }
       if (specsContainer) {
         const chips = specsContainer.querySelectorAll('.spec-text');
