@@ -534,7 +534,7 @@
         clearTimeout(clickTimeout);
         setActiveStep(targetIdx);
 
-        const offset = window.innerWidth < 768 ? 90 : 130;
+        const offset = window.innerWidth < 768 ? 132 : 130;
         const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: targetY, behavior: 'smooth' });
 
