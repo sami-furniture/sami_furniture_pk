@@ -373,30 +373,36 @@ body.cursor-explore #cursorFollower {
     -webkit-backdrop-filter: blur(16px);
     width: 100% !important;
     max-width: 100% !important;
+    padding: 0.5rem 0.875rem !important;
+    margin-bottom: 0.75rem !important;
   }
 
   .story-step {
     border-left: none !important;
-    padding: 1.25rem 1rem !important;
+    padding: 1rem 0.875rem !important;
     width: 100% !important;
     max-width: 100% !important;
-    border-radius: 1.25rem !important;
-    background: rgba(255, 255, 255, 0.02);
+    border-radius: 1rem !important;
+    background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-sizing: border-box !important;
+    scroll-margin-top: 130px;
     transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
   }
 
   .story-step.active-step {
-    border-color: rgba(200, 164, 92, 0.45) !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(200, 164, 92, 0.08);
+    border-color: rgba(200, 164, 92, 0.5) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6), 0 0 16px rgba(200, 164, 92, 0.1);
   }
 
   .mobile-story-card {
     width: 100% !important;
     max-width: 100% !important;
-    aspect-ratio: 16 / 10 !important;
+    max-height: 180px !important;
+    aspect-ratio: 16 / 9 !important;
+    margin-top: 0.65rem !important;
+    border-radius: 0.75rem !important;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.4s ease,
                 box-shadow 0.4s ease;
@@ -405,6 +411,7 @@ body.cursor-explore #cursorFollower {
   .mobile-story-card img {
     width: 100% !important;
     height: 100% !important;
+    max-height: 180px !important;
     object-fit: cover !important;
   }
 }
