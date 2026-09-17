@@ -388,222 +388,311 @@
     if (section.dataset.storyInitialized === 'true') return;
     section.dataset.storyInitialized = 'true';
 
-    const steps = section.querySelectorAll('.story-step');
+    const mainCard = section.querySelector('#storyMainCard');
+    const tabs = section.querySelectorAll('.story-tab-btn');
     const images = section.querySelectorAll('.story-visual-img');
-    const pill = section.querySelector('#storyStageIndicator');
-    const phaseEyebrow = section.querySelector('#storyPhaseEyebrow');
-    const phaseTitle = section.querySelector('#storyPhaseTitle');
-    const phaseBadge = section.querySelector('#storyPhaseBadge');
-    const stageTabs = section.querySelectorAll('.story-stage-tab');
+    const progressBar = section.querySelector('#storyProgressBar');
+    const currentNum = section.querySelector('#storyCurrentNum');
 
-    // Mobile Tracker Elements
-    const mobileStageText = section.querySelector('#mobileStoryStageText');
-    const mobilePill = section.querySelector('#mobileStoryPill');
-    const mobileSegments = section.querySelectorAll('.mobile-bar-seg');
+    // Visual Overlay Elements
+    const visualPillText = section.querySelector('#storyVisualPillText');
+    const visualBadge = section.querySelector('#storyVisualBadge');
+    const visualEyebrow = section.querySelector('#storyVisualEyebrow');
+    const visualTitle = section.querySelector('#storyVisualTitle');
+    const visualAtelier = section.querySelector('#storyVisualAtelier');
 
-    if (steps.length === 0) return;
+    // Narrative Elements
+    const watermark = section.querySelector('#storyWatermark');
+    const textEyebrow = section.querySelector('#storyTextEyebrow');
+    const textTitle = section.querySelector('#storyTextTitle');
+    const textDesc = section.querySelector('#storyTextDesc');
+    const specsContainer = section.querySelector('#storySpecsContainer');
+
+    // Control Elements
+    const prevBtn = section.querySelector('#storyPrevBtn');
+    const nextBtn = section.querySelector('#storyNextBtn');
+    const dots = section.querySelectorAll('.story-dot');
+    const playPauseBtn = section.querySelector('#storyPlayPauseBtn');
+    const playIcon = section.querySelector('#storyPlayIcon');
+    const pauseIcon = section.querySelector('#storyPauseIcon');
+
+    if (!mainCard || images.length === 0) return;
 
     const STAGES_DATA = [
       {
         stage: '01',
-        eyebrow: 'Phase 01 · Raw Material',
-        title: 'Kiln-Dried Hardwood Timber',
+        phaseEyebrow: 'Phase 01 · Raw Material',
+        title: 'Seasoned Timber Selection',
+        desc: 'We exclusively harvest kiln-dried, seasoned Sheesham (Rosewood) and Teak. By testing moisture below 10%, we eliminate warping or seasonal expansion.',
+        visualTitle: 'Kiln-Dried Hardwood Timber',
         badge: 'Seasoned Wood',
-        mobileText: 'Stage 01: Seasoned Timber'
+        atelier: 'Timber Selection Guild',
+        specs: ['Moisture < 10%', 'Sheesham & Teak', 'Warp-Proof Stability']
       },
       {
         stage: '02',
-        eyebrow: 'Phase 02 · Master Joinery',
-        title: 'Solid Wood Workshop Assembly',
+        phaseEyebrow: 'Phase 02 · Architectural Framework',
+        title: 'Architectural Joinery',
+        desc: 'Master woodworkers cut mortise-and-tenon joints, interlocking timber pieces mechanically rather than relying solely on nails. Heavy load points are reinforced to endure decades.',
+        visualTitle: 'Solid Wood Workshop Assembly',
         badge: 'Mortise & Tenon',
-        mobileText: 'Stage 02: Architectural Joinery'
+        atelier: 'Gujranwala Atelier',
+        specs: ['100% Mortise & Tenon', 'Mechanical Interlock', 'Reinforced Load Points']
       },
       {
         stage: '03',
-        eyebrow: 'Phase 03 · Hand Polishing',
-        title: 'Hand-Rubbed Polish & Finish',
+        phaseEyebrow: 'Phase 03 · Hand Polishing',
+        title: 'Artisanal Hand Finishing',
+        desc: "Surfaces are sanded through five progressive grits of paper, followed by multiple coats of hand-rubbed natural oils or Italian lacquers to celebrate the wood's deep organic grain.",
+        visualTitle: 'Hand-Rubbed Polish & Finish',
         badge: 'Organic Grain',
-        mobileText: 'Stage 03: Artisanal Finishing'
+        atelier: 'Finishing Studio',
+        specs: ['5 Progressive Grits', 'Hand-Rubbed Natural Oils', 'Italian Lacquer Finish']
       },
       {
         stage: '04',
-        eyebrow: 'Phase 04 · Master Upholstery',
-        title: 'Deep Diamond Button Tufting',
+        phaseEyebrow: 'Phase 04 · Luxury Tailoring',
+        title: 'Luxury Upholstery',
+        desc: 'High-density imported HR foam, reinforced webbing, and hand-selected velvet or top-grain leather are tailored seamlessly with double-stitched durability.',
+        visualTitle: 'Deep Diamond Button Tufting',
         badge: 'Luxury Tailoring',
-        mobileText: 'Stage 04: Luxury Upholstery'
+        atelier: 'Master Upholsterers',
+        specs: ['High-Density HR Foam', 'Top-Grain & Velvet', 'Double-Stitched Seams']
       },
       {
         stage: '05',
-        eyebrow: 'Phase 05 · Living Sanctuary',
-        title: 'Installed in Your Living Space',
+        phaseEyebrow: 'Phase 05 · Living Sanctuary',
+        title: 'Installed in Your Sanctuary',
+        desc: 'White-glove delivery across Pakistan. Our team handles transit, uncrating, and precision placement inside your home so your space is immediately transformed.',
+        visualTitle: 'Installed in Your Living Space',
         badge: 'Sanctuary Placed',
-        mobileText: 'Stage 05: Living Sanctuary'
+        atelier: 'Pakistan Nationwide',
+        specs: ['White-Glove Delivery', 'Precision Placement', 'Immediate Transformation']
       }
     ];
 
     let currentActiveIdx = -1;
-    let isUserClicking = false;
-    let clickTimeout = null;
+    let autoTimer = null;
+    let isPaused = false;
 
-    function setActiveStep(index) {
-      if (index === currentActiveIdx) return;
+    function setActiveStage(index) {
+      if (index === currentActiveIdx || index < 0 || index >= STAGES_DATA.length) return;
       currentActiveIdx = index;
-      const data = STAGES_DATA[index] || STAGES_DATA[0];
+      const data = STAGES_DATA[index];
 
-      // 1. Highlight current step bullet & text
-      steps.forEach((s, i) => {
-        const isActive = (i === index);
-        s.classList.toggle('active-step', isActive);
-        const indicator = s.querySelector('.step-bullet');
-        if (indicator) {
-          if (isActive) {
-            indicator.classList.remove('bg-brand-noir-light', 'text-white/40', 'border-white/10');
-            indicator.classList.add('bg-brand-gold', 'text-brand-noir', 'border-brand-gold', 'scale-110');
-          } else {
-            indicator.classList.remove('bg-brand-gold', 'text-brand-noir', 'border-brand-gold', 'scale-110');
-            indicator.classList.add('bg-brand-noir-light', 'text-white/40', 'border-white/10');
-          }
-        }
-
-        // Highlight mobile visual card
-        const mobileCard = s.querySelector('.mobile-story-card');
-        if (mobileCard) {
-          if (isActive) {
-            mobileCard.classList.remove('border-white/10');
-            mobileCard.classList.add('border-brand-gold/70', 'shadow-gold');
-          } else {
-            mobileCard.classList.remove('border-brand-gold/70', 'shadow-gold');
-            mobileCard.classList.add('border-white/10');
-          }
-        }
-      });
-
-      // 2. Cross-fade desktop visual images smoothly
+      // 1. Cross-fade 4:3 visual images
       images.forEach((img, i) => {
         if (i === index) {
           img.style.opacity = '1';
           img.style.transform = 'scale(1)';
+          img.style.pointerEvents = 'auto';
           img.style.zIndex = '2';
         } else {
           img.style.opacity = '0';
-          img.style.transform = 'scale(1.04)';
+          img.style.transform = 'scale(1.05)';
+          img.style.pointerEvents = 'none';
           img.style.zIndex = '1';
         }
       });
 
-      // 3. Update desktop pill badge
-      if (pill) {
-        pill.textContent = `Stage ${data.stage} / 05`;
-      }
-
-      // 4. Update desktop bottom overlay metadata
-      if (phaseEyebrow) phaseEyebrow.textContent = data.eyebrow;
-      if (phaseTitle) phaseTitle.textContent = data.title;
-      if (phaseBadge) phaseBadge.textContent = data.badge;
-
-      // 5. Update desktop stage navigation tabs
-      stageTabs.forEach((tab, i) => {
+      // 2. Update Tabs
+      tabs.forEach((tab, i) => {
         const isActive = (i === index);
-        tab.classList.toggle('bg-brand-gold', isActive);
-        tab.classList.toggle('text-brand-noir', isActive);
-        tab.classList.toggle('shadow-gold', isActive);
-        tab.classList.toggle('bg-white/5', !isActive);
-        tab.classList.toggle('text-white/60', !isActive);
-      });
-
-      // 6. Update mobile sticky progress tracker
-      if (mobileStageText) mobileStageText.textContent = data.mobileText;
-      if (mobilePill) mobilePill.textContent = `${data.stage} / 05`;
-      if (mobileSegments && mobileSegments.length > 0) {
-        mobileSegments.forEach((seg, i) => {
-          if (i <= index) {
-            seg.classList.remove('bg-white/20');
-            seg.classList.add('bg-brand-gold');
-          } else {
-            seg.classList.remove('bg-brand-gold');
-            seg.classList.add('bg-white/20');
-          }
-        });
-      }
-    }
-
-    // Clickable Stage Jump Tabs on Desktop & Mobile Progress Segments
-    function handleStageJump(targetIdx) {
-      if (!isNaN(targetIdx) && steps[targetIdx]) {
-        isUserClicking = true;
-        clearTimeout(clickTimeout);
-        setActiveStep(targetIdx);
-
-        const offset = window.innerWidth < 768 ? 132 : 130;
-        const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-
-        clickTimeout = setTimeout(() => {
-          isUserClicking = false;
-        }, 900);
-      }
-    }
-
-    stageTabs.forEach((tab) => {
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetIdx = parseInt(tab.dataset.stage, 10);
-        handleStageJump(targetIdx);
-      });
-    });
-
-    mobileSegments.forEach((seg) => {
-      seg.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetIdx = parseInt(seg.dataset.seg, 10);
-        handleStageJump(targetIdx);
-      });
-    });
-
-    // Failsafe Scroll Position Evaluator: Works reliably across all browsers & OS motion settings
-    function evaluateScrollStep() {
-      if (isUserClicking) return;
-
-      const viewportTarget = window.innerHeight * 0.45;
-      let selectedIdx = 0;
-      let minDistance = Infinity;
-
-      steps.forEach((step, idx) => {
-        const rect = step.getBoundingClientRect();
-        // Step directly spans across the active viewport line
-        if (rect.top <= viewportTarget && rect.bottom >= viewportTarget) {
-          selectedIdx = idx;
-          minDistance = 0;
-        } else {
-          const dist = Math.abs(rect.top - viewportTarget);
-          if (dist < minDistance && minDistance !== 0) {
-            minDistance = dist;
-            selectedIdx = idx;
-          }
+        tab.classList.toggle('active', isActive);
+        if (isActive) {
+          tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
       });
 
-      setActiveStep(selectedIdx);
+      // 3. Update Progress Line & Counters
+      if (progressBar) {
+        progressBar.style.width = `${((index + 1) / STAGES_DATA.length) * 100}%`;
+      }
+      if (currentNum) {
+        currentNum.textContent = data.stage;
+      }
+
+      // 4. Update Visual Card Overlays
+      if (visualPillText) visualPillText.textContent = `Stage ${data.stage} / 05`;
+      if (visualBadge) visualBadge.textContent = data.badge;
+      if (visualEyebrow) visualEyebrow.textContent = data.phaseEyebrow;
+      if (visualTitle) visualTitle.textContent = data.visualTitle;
+      if (visualAtelier) visualAtelier.textContent = data.atelier;
+
+      // 5. Update Narrative Content with refined micro-transitions
+      if (watermark) {
+        watermark.style.opacity = '0';
+        setTimeout(() => {
+          watermark.textContent = data.stage;
+          watermark.style.opacity = '1';
+        }, 150);
+      }
+      if (textEyebrow) textEyebrow.textContent = data.phaseEyebrow;
+      if (textTitle) {
+        textTitle.style.opacity = '0';
+        textTitle.style.transform = 'translateY(6px)';
+        setTimeout(() => {
+          textTitle.textContent = data.title;
+          textTitle.style.opacity = '1';
+          textTitle.style.transform = 'translateY(0)';
+        }, 120);
+      }
+      if (textDesc) {
+        textDesc.style.opacity = '0';
+        setTimeout(() => {
+          textDesc.textContent = data.desc;
+          textDesc.style.opacity = '1';
+        }, 150);
+      }
+      if (specsContainer) {
+        const chips = specsContainer.querySelectorAll('.spec-text');
+        data.specs.forEach((spec, i) => {
+          if (chips[i]) chips[i].textContent = spec;
+        });
+      }
+
+      // 6. Update Dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+        if (i === index) {
+          dot.classList.remove('bg-white/20');
+          dot.classList.add('bg-brand-gold');
+        } else {
+          dot.classList.remove('bg-brand-gold');
+          dot.classList.add('bg-white/20');
+        }
+      });
+
+      // 7. Update Stepper Buttons
+      if (prevBtn) {
+        prevBtn.disabled = (index === 0);
+      }
+      if (nextBtn) {
+        if (index === STAGES_DATA.length - 1) {
+          nextBtn.innerHTML = '<span>Restart</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
+        } else {
+          nextBtn.innerHTML = '<span>Next Rite</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>';
+        }
+      }
     }
 
-    window.addEventListener('scroll', evaluateScrollStep, { passive: true });
-    window.addEventListener('resize', evaluateScrollStep, { passive: true });
+    // Auto Advance Mechanism (Pauses on Hover & Touch)
+    function startAutoTimer() {
+      if (isPaused) return;
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => {
+        const next = (currentActiveIdx + 1) % STAGES_DATA.length;
+        setActiveStage(next);
+      }, 7000);
+    }
 
-    // GSAP ScrollTrigger Integration (if loaded and reduced-motion not active)
-    if (typeof ScrollTrigger !== 'undefined') {
-      steps.forEach((step, idx) => {
-        ScrollTrigger.create({
-          trigger: step,
-          start: () => window.innerWidth < 768 ? 'top 65%' : 'top 55%',
-          end: () => window.innerWidth < 768 ? 'bottom 35%' : 'bottom 45%',
-          onEnter: () => { if (!isUserClicking) setActiveStep(idx); },
-          onEnterBack: () => { if (!isUserClicking) setActiveStep(idx); },
-        });
+    function pauseAutoTimer() {
+      clearInterval(autoTimer);
+    }
+
+    // Tab Clicks
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(tab.dataset.stage, 10);
+        setActiveStage(targetIdx);
+        startAutoTimer();
+      });
+    });
+
+    // Dot Clicks
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(dot.dataset.dot, 10);
+        setActiveStage(targetIdx);
+        startAutoTimer();
+      });
+    });
+
+    // Prev / Next Controls
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentActiveIdx > 0) {
+          setActiveStage(currentActiveIdx - 1);
+          startAutoTimer();
+        }
       });
     }
 
-    // Set initial stage
-    setActiveStep(0);
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const next = (currentActiveIdx + 1) % STAGES_DATA.length;
+        setActiveStage(next);
+        startAutoTimer();
+      });
+    }
+
+    // Play / Pause Auto-Advance Toggle
+    if (playPauseBtn) {
+      playPauseBtn.addEventListener('click', () => {
+        isPaused = !isPaused;
+        if (isPaused) {
+          pauseAutoTimer();
+          if (playIcon) playIcon.classList.remove('hidden');
+          if (pauseIcon) pauseIcon.classList.add('hidden');
+        } else {
+          startAutoTimer();
+          if (playIcon) playIcon.classList.add('hidden');
+          if (pauseIcon) pauseIcon.classList.remove('hidden');
+        }
+      });
+    }
+
+    // Pause on Mouse Hover
+    mainCard.addEventListener('mouseenter', pauseAutoTimer);
+    mainCard.addEventListener('mouseleave', () => {
+      if (!isPaused) startAutoTimer();
+    });
+
+    // Touch Swipe Gesture Detection for Mobile & Tablets
+    let touchStartX = 0;
+    let touchStartY = 0;
+    mainCard.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+      pauseAutoTimer();
+    }, { passive: true });
+
+    mainCard.addEventListener('touchend', (e) => {
+      const deltaX = e.changedTouches[0].screenX - touchStartX;
+      const deltaY = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.3) {
+        if (deltaX < 0) {
+          // Swipe Left -> Next
+          const next = (currentActiveIdx + 1) % STAGES_DATA.length;
+          setActiveStage(next);
+        } else if (deltaX > 0 && currentActiveIdx > 0) {
+          // Swipe Right -> Prev
+          setActiveStage(currentActiveIdx - 1);
+        }
+      }
+      if (!isPaused) startAutoTimer();
+    }, { passive: true });
+
+    // Initial Stage Set
+    setActiveStage(0);
+
+    // Entrance Animation via ScrollTrigger if available
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 75%',
+        once: true,
+        onEnter: () => {
+          startAutoTimer();
+        }
+      });
+    } else {
+      startAutoTimer();
+    }
   }
 
   /* ------------------------------------------------------------

@@ -362,104 +362,78 @@ body.cursor-explore #cursorFollower {
   filter: contrast(1.03) saturate(0.92);
 }
 
-/* 13b. Scroll-Driven Storytelling Mobile Staging Tiles */
-@media (max-width: 767.98px) {
-  .story-visual-col {
-    display: none !important;
-  }
-
-  #mobileStoryTracker {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0.5rem 0.875rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  .story-step {
-    border-left: none !important;
-    padding: 0.875rem !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    border-radius: 1.25rem !important;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-sizing: border-box !important;
-    scroll-margin-top: 132px;
-    scroll-snap-align: start;
-    height: calc(100vh - 146px);
-    height: calc(100dvh - 146px);
-    min-height: 380px;
-    max-height: 640px;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .story-step.active-step {
-    border-color: rgba(200, 164, 92, 0.55) !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7), 0 0 20px rgba(200, 164, 92, 0.12);
-  }
-
-  .mobile-story-card {
-    flex: 1 1 auto;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: 170px !important;
-    margin-top: 0.5rem !important;
-    border-radius: 0.875rem !important;
-    position: relative !important;
-    overflow: hidden !important;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.4s ease,
-                box-shadow 0.4s ease;
-  }
-
-  .mobile-story-card img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .story-steps-col {
-    scroll-snap-type: y proximity;
-    padding-bottom: 2.5rem !important;
-  }
+/* 13b. Unified Storytelling Stage Showcase (Consistent Desktop & Mobile) */
+.story-tabs-track {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.story-tabs-track::-webkit-scrollbar {
+  display: none;
 }
 
-@media (min-width: 768px) {
-  /* Desktop: Side-by-side grid column stretches full height, frame sticks beside scrolling steps */
-  .story-visual-col {
-    display: block !important;
-    position: relative !important;
-    align-self: stretch !important;
-    height: auto !important;
-  }
+.story-tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  user-select: none;
+  cursor: pointer;
+}
+.story-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border-color: rgba(197, 168, 128, 0.35);
+}
+.story-tab-btn.active {
+  background: #C5A880;
+  color: #0B1015;
+  border-color: #C5A880;
+  box-shadow: 0 4px 20px -4px rgba(197, 168, 128, 0.45);
+}
+.story-tab-btn .tab-num {
+  opacity: 0.75;
+}
+.story-tab-btn.active .tab-num {
+  opacity: 1;
+}
 
-  .story-sticky-frame {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: 7rem !important; /* 112px below desktop header */
-    z-index: 25 !important;
-    will-change: transform;
-  }
+.story-stage-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.7),
+              0 0 40px -10px rgba(197, 168, 128, 0.08);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.story-stage-card:hover {
+  border-color: rgba(197, 168, 128, 0.25);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8),
+              0 0 50px -10px rgba(197, 168, 128, 0.12);
+}
 
-  .story-visual-img {
-    will-change: opacity, transform;
-  }
+.story-visual-frame {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+.story-visual-frame img {
+  will-change: opacity, transform;
+}
 
-  .story-stage-tab {
-    cursor: pointer;
-    user-select: none;
-  }
+.story-spec-chip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+}
+.story-spec-chip:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(197, 168, 128, 0.3);
+  transform: translateY(-1px);
+}
 
-  .story-steps-col {
-    position: relative;
-    z-index: 10;
-  }
+.story-dot {
+  cursor: pointer;
+  user-select: none;
+}
+.story-dot.active {
+  background-color: #C5A880 !important;
+  width: 1.25rem !important;
 }
 
 /* 14. Hero Multi-Scene Cinematic Animation */
