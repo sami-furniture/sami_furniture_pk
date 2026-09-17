@@ -316,15 +316,21 @@ body.cursor-explore #cursorFollower {
 
 .horizontal-track {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   width: max-content;
-  will-change: transform;
 }
 
 .suite-card {
   width: clamp(300px, 32vw, 440px);
   flex-shrink: 0;
+  user-select: none;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.suite-card img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 .suite-card:hover {

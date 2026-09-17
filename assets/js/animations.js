@@ -21,9 +21,12 @@
   /* ------------------------------------------------------------
      1. Scroll Progress Bar (Requirement 17)
      ------------------------------------------------------------ */
+  let scrollProgressInitialized = false;
   function initScrollProgress() {
+    if (scrollProgressInitialized) return;
     const bar = document.getElementById('scrollProgressBar');
     if (!bar) return;
+    scrollProgressInitialized = true;
 
     window.addEventListener('scroll', () => {
       const h = document.documentElement;
@@ -37,13 +40,16 @@
   /* ------------------------------------------------------------
      2. Fluid Custom Cursor System (Requirement 12)
      ------------------------------------------------------------ */
+  let customCursorInitialized = false;
   function initCustomCursor() {
+    if (customCursorInitialized) return;
     // Only on hover/pointer capable devices, disabled on touch/reduced motion
     if (prefersReducedMotion || window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
 
     const dot = document.getElementById('cursorDot');
     const follower = document.getElementById('cursorFollower');
     if (!dot || !follower) return;
+    customCursorInitialized = true;
 
     dot.style.display = 'block';
     follower.style.display = 'flex';
