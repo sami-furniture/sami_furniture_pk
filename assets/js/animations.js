@@ -527,24 +527,36 @@
       }
     }
 
-    // Clickable Stage Jump Tabs on Desktop (Instant switch + smooth scroll)
+    // Clickable Stage Jump Tabs on Desktop & Mobile Progress Segments
+    function handleStageJump(targetIdx) {
+      if (!isNaN(targetIdx) && steps[targetIdx]) {
+        isUserClicking = true;
+        clearTimeout(clickTimeout);
+        setActiveStep(targetIdx);
+
+        const offset = window.innerWidth < 768 ? 90 : 130;
+        const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+        clickTimeout = setTimeout(() => {
+          isUserClicking = false;
+        }, 900);
+      }
+    }
+
     stageTabs.forEach((tab) => {
       tab.addEventListener('click', (e) => {
         e.preventDefault();
         const targetIdx = parseInt(tab.dataset.stage, 10);
-        if (!isNaN(targetIdx) && steps[targetIdx]) {
-          isUserClicking = true;
-          clearTimeout(clickTimeout);
-          setActiveStep(targetIdx);
+        handleStageJump(targetIdx);
+      });
+    });
 
-          const offset = window.innerWidth < 768 ? 90 : 130;
-          const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-
-          clickTimeout = setTimeout(() => {
-            isUserClicking = false;
-          }, 900);
-        }
+    mobileSegments.forEach((seg) => {
+      seg.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(seg.dataset.seg, 10);
+        handleStageJump(targetIdx);
       });
     });
 

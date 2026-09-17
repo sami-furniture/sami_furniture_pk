@@ -321,7 +321,8 @@ body.cursor-explore #cursorFollower {
 }
 
 .suite-card {
-  width: clamp(300px, 32vw, 440px);
+  width: clamp(280px, 32vw, 440px);
+  max-width: calc(100vw - 40px);
   flex-shrink: 0;
   user-select: none;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -361,7 +362,7 @@ body.cursor-explore #cursorFollower {
   filter: contrast(1.03) saturate(0.92);
 }
 
-/* 13b. Scroll-Driven Storytelling Sticky Frame */
+/* 13b. Scroll-Driven Storytelling Mobile Staging Tiles */
 @media (max-width: 767.98px) {
   .story-visual-col {
     display: none !important;
@@ -370,12 +371,41 @@ body.cursor-explore #cursorFollower {
   #mobileStoryTracker {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .story-step {
+    border-left: none !important;
+    padding: 1.25rem 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 1.25rem !important;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .story-step.active-step {
+    border-color: rgba(200, 164, 92, 0.45) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(200, 164, 92, 0.08);
   }
 
   .mobile-story-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 10 !important;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.4s ease,
                 box-shadow 0.4s ease;
+  }
+
+  .mobile-story-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
   }
 }
 
