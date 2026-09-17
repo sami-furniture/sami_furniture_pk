@@ -247,12 +247,6 @@
         },
       });
     });
-
-    /* --- 4g. Horizontal Scroll Collection (Requirement 6) --- */
-    initHorizontalCollection();
-
-    /* --- 4h. Scroll-Based Storytelling (Requirement 5) --- */
-    initStorytelling();
   }
 
   /* ------------------------------------------------------------
@@ -323,7 +317,7 @@
     const mobilePill = section.querySelector('#mobileStoryPill');
     const mobileSegments = section.querySelectorAll('.mobile-bar-seg');
 
-    if (steps.length === 0 || images.length === 0) return;
+    if (steps.length === 0) return;
 
     const STAGES_DATA = [
       {
@@ -363,31 +357,13 @@
       }
     ];
 
-    // Clickable Stage Jump Tabs on Desktop
-    stageTabs.forEach((tab) => {
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetIdx = parseInt(tab.dataset.stage, 10);
-        if (steps[targetIdx]) {
-          const offset = window.innerWidth < 768 ? 90 : 130;
-          const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-        }
-      });
-    });
-
-    // Switch active visual based on scroll (responsive thresholds for mobile and desktop)
-    steps.forEach((step, idx) => {
-      ScrollTrigger.create({
-        trigger: step,
-        start: () => window.innerWidth < 768 ? 'top 65%' : 'top 55%',
-        end: () => window.innerWidth < 768 ? 'bottom 35%' : 'bottom 45%',
-        onEnter: () => setActiveStep(idx),
-        onEnterBack: () => setActiveStep(idx),
-      });
-    });
+    let currentActiveIdx = -1;
+    let isUserClicking = false;
+    let clickTimeout = null;
 
     function setActiveStep(index) {
+      if (index === currentActiveIdx) return;
+      currentActiveIdx = index;
       const data = STAGES_DATA[index] || STAGES_DATA[0];
 
       // 1. Highlight current step bullet & text
@@ -426,7 +402,7 @@
           img.style.zIndex = '2';
         } else {
           img.style.opacity = '0';
-          img.style.transform = 'scale(1.05)';
+          img.style.transform = 'scale(1.04)';
           img.style.zIndex = '1';
         }
       });
@@ -443,13 +419,12 @@
 
       // 5. Update desktop stage navigation tabs
       stageTabs.forEach((tab, i) => {
-        if (i === index) {
-          tab.classList.add('bg-brand-gold', 'text-brand-noir', 'shadow-gold');
-          tab.classList.remove('bg-white/5', 'text-white/60');
-        } else {
-          tab.classList.remove('bg-brand-gold', 'text-brand-noir', 'shadow-gold');
-          tab.classList.add('bg-white/5', 'text-white/60');
-        }
+        const isActive = (i === index);
+        tab.classList.toggle('bg-brand-gold', isActive);
+        tab.classList.toggle('text-brand-noir', isActive);
+        tab.classList.toggle('shadow-gold', isActive);
+        tab.classList.toggle('bg-white/5', !isActive);
+        tab.classList.toggle('text-white/60', !isActive);
       });
 
       // 6. Update mobile sticky progress tracker
@@ -466,6 +441,69 @@
           }
         });
       }
+    }
+
+    // Clickable Stage Jump Tabs on Desktop (Instant switch + smooth scroll)
+    stageTabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(tab.dataset.stage, 10);
+        if (!isNaN(targetIdx) && steps[targetIdx]) {
+          isUserClicking = true;
+          clearTimeout(clickTimeout);
+          setActiveStep(targetIdx);
+
+          const offset = window.innerWidth < 768 ? 90 : 130;
+          const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+
+          clickTimeout = setTimeout(() => {
+            isUserClicking = false;
+          }, 900);
+        }
+      });
+    });
+
+    // Failsafe Scroll Position Evaluator: Works reliably across all browsers & OS motion settings
+    function evaluateScrollStep() {
+      if (isUserClicking) return;
+
+      const viewportTarget = window.innerHeight * 0.45;
+      let selectedIdx = 0;
+      let minDistance = Infinity;
+
+      steps.forEach((step, idx) => {
+        const rect = step.getBoundingClientRect();
+        // Step directly spans across the active viewport line
+        if (rect.top <= viewportTarget && rect.bottom >= viewportTarget) {
+          selectedIdx = idx;
+          minDistance = 0;
+        } else {
+          const dist = Math.abs(rect.top - viewportTarget);
+          if (dist < minDistance && minDistance !== 0) {
+            minDistance = dist;
+            selectedIdx = idx;
+          }
+        }
+      });
+
+      setActiveStep(selectedIdx);
+    }
+
+    window.addEventListener('scroll', evaluateScrollStep, { passive: true });
+    window.addEventListener('resize', evaluateScrollStep, { passive: true });
+
+    // GSAP ScrollTrigger Integration (if loaded and reduced-motion not active)
+    if (typeof ScrollTrigger !== 'undefined') {
+      steps.forEach((step, idx) => {
+        ScrollTrigger.create({
+          trigger: step,
+          start: () => window.innerWidth < 768 ? 'top 65%' : 'top 55%',
+          end: () => window.innerWidth < 768 ? 'bottom 35%' : 'bottom 45%',
+          onEnter: () => { if (!isUserClicking) setActiveStep(idx); },
+          onEnterBack: () => { if (!isUserClicking) setActiveStep(idx); },
+        });
+      });
     }
 
     // Set initial stage
@@ -528,13 +566,18 @@
     initCustomCursor();
     initMagneticButtons();
     initHeroScenes();
+    initStorytelling();
+    initHorizontalCollection();
     initGSAPAnimations();
   }
+
+  window.initStorytelling = initStorytelling;
 
   document.addEventListener('sections:loaded', initAll);
 
   // Fallback in case sections are already rendered
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  if (document.readyState === 'complete' || document.readyState === 'interactive' || document.documentElement.dataset.sectionsReady === 'true') {
+    initAll();
     setTimeout(initAll, 200);
   }
 })();
