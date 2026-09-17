@@ -420,53 +420,53 @@
     const STAGES_DATA = [
       {
         stage: '01',
-        phaseEyebrow: 'Phase 01 · Raw Material',
-        title: 'Seasoned Timber Selection',
-        desc: 'We exclusively harvest kiln-dried, seasoned Sheesham (Rosewood) and Teak. By testing moisture below 10%, we eliminate warping or seasonal expansion.',
-        visualTitle: 'Kiln-Dried Hardwood Timber',
+        phaseEyebrow: 'Step 01 · Wood Quality',
+        title: 'Seasoned Solid Wood Selection',
+        desc: 'We only use kiln-dried, seasoned Sheesham (Rosewood) and Teak. We test moisture levels below 10%, which stops the wood from bending, cracking, or expanding in changing weather.',
+        visualTitle: 'Seasoned Solid Wood Planks',
         badge: 'Seasoned Wood',
-        atelier: 'Timber Selection Guild',
-        specs: ['Moisture < 10%', 'Sheesham & Teak', 'Warp-Proof Stability']
+        atelier: 'Gujranwala Workshop',
+        specs: ['Moisture Under 10%', 'Pure Sheesham & Teak', 'No Cracking or Warping']
       },
       {
         stage: '02',
-        phaseEyebrow: 'Phase 02 · Architectural Framework',
-        title: 'Architectural Joinery',
-        desc: 'Master woodworkers cut mortise-and-tenon joints, interlocking timber pieces mechanically rather than relying solely on nails. Heavy load points are reinforced to endure decades.',
-        visualTitle: 'Solid Wood Workshop Assembly',
-        badge: 'Mortise & Tenon',
-        atelier: 'Gujranwala Atelier',
-        specs: ['100% Mortise & Tenon', 'Mechanical Interlock', 'Reinforced Load Points']
+        phaseEyebrow: 'Step 02 · Wood Structure',
+        title: 'Solid Wood Framing & Joints',
+        desc: 'Our master carpenters cut traditional mortise-and-tenon interlocking joints. The wood pieces lock together mechanically rather than relying only on nails, giving your furniture decades of strength.',
+        visualTitle: 'Master Hand Joinery',
+        badge: 'Interlocking Joints',
+        atelier: 'Gujranwala Workshop',
+        specs: ['Interlocking Joints', 'Solid Wood Frame', 'Built for Generations']
       },
       {
         stage: '03',
-        phaseEyebrow: 'Phase 03 · Hand Polishing',
-        title: 'Artisanal Hand Finishing',
-        desc: "Surfaces are sanded through five progressive grits of paper, followed by multiple coats of hand-rubbed natural oils or Italian lacquers to celebrate the wood's deep organic grain.",
-        visualTitle: 'Hand-Rubbed Polish & Finish',
-        badge: 'Organic Grain',
-        atelier: 'Finishing Studio',
-        specs: ['5 Progressive Grits', 'Hand-Rubbed Natural Oils', 'Italian Lacquer Finish']
+        phaseEyebrow: 'Step 03 · Hand Finishing',
+        title: 'Hand Sanding & Smooth Polish',
+        desc: 'Every surface is sanded by hand through five progressive grades of sandpaper, followed by multiple coats of natural oils or Italian lacquer to highlight the natural wood grain and give a rich, smooth finish.',
+        visualTitle: 'Hand-Rubbed Lacquer Finish',
+        badge: 'Natural Grain',
+        atelier: 'Polishing Studio',
+        specs: ['5-Grade Hand Sanding', 'Italian Lacquer Polish', 'Rich Natural Wood Grain']
       },
       {
         stage: '04',
-        phaseEyebrow: 'Phase 04 · Luxury Tailoring',
-        title: 'Luxury Upholstery',
-        desc: 'High-density imported HR foam, reinforced webbing, and hand-selected velvet or top-grain leather are tailored seamlessly with double-stitched durability.',
-        visualTitle: 'Deep Diamond Button Tufting',
-        badge: 'Luxury Tailoring',
-        atelier: 'Master Upholsterers',
-        specs: ['High-Density HR Foam', 'Top-Grain & Velvet', 'Double-Stitched Seams']
+        phaseEyebrow: 'Step 04 · Cushioning & Fabric',
+        title: 'Comfort Foam & Luxury Upholstery',
+        desc: 'We use high-density imported Molty/HR foam with heavy-duty webbing and premium velvet or leatherette, carefully stitched with double-layered seams for lasting comfort and shape.',
+        visualTitle: 'Master Button Tufting',
+        badge: 'Luxury Fabric',
+        atelier: 'Upholstery Team',
+        specs: ['High-Density HR Foam', 'Premium Velvet & Leather', 'Durable Double Stitching']
       },
       {
         stage: '05',
-        phaseEyebrow: 'Phase 05 · Living Sanctuary',
-        title: 'Installed in Your Sanctuary',
-        desc: 'White-glove delivery across Pakistan. Our team handles transit, uncrating, and precision placement inside your home so your space is immediately transformed.',
-        visualTitle: 'Installed in Your Living Space',
-        badge: 'Sanctuary Placed',
-        atelier: 'Pakistan Nationwide',
-        specs: ['White-Glove Delivery', 'Precision Placement', 'Immediate Transformation']
+        phaseEyebrow: 'Step 05 · Safe Delivery',
+        title: 'Delivered & Set Up in Your Home',
+        desc: 'Safe delivery across Pakistan. Our team handles transport, unboxing, and places the furniture directly in your room so you can enjoy your new space right away without any hassle.',
+        visualTitle: 'Placed in Your Home',
+        badge: 'Delivered & Set Up',
+        atelier: 'All Pakistan Delivery',
+        specs: ['Safe Nationwide Delivery', 'Complete Room Setup', 'Zero-Hassle Unboxing']
       }
     ];
 

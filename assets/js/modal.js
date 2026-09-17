@@ -270,7 +270,7 @@
         const related = getRelatedPieces(view.idx, p.category);
 
         const buildWaUrl = (timberName, fabricName) => {
-          const msg = `Hi Sami Furniture House, I'm interested in commissioning the "${p.name}" in ${timberName} with ${fabricName} upholstery. Could you please provide custom pricing, sizing, and lead time?`;
+          const msg = `Hi Sami Furniture House, I'm interested in "${p.name}" in ${timberName} with ${fabricName} fabric. Could you please share the price, dimensions, and delivery time?`;
           return `https://wa.me/923294300096?text=${encodeURIComponent(msg)}`;
         };
 
@@ -295,7 +295,7 @@
                 <!-- Top Floating Badges -->
                 <div class="absolute top-4 inset-x-4 flex items-center justify-between pointer-events-none">
                   <span class="px-3.5 py-1.5 rounded-full bg-brand-ink/90 backdrop-blur-md border border-brand-gold/50 text-brand-gold-light text-[10px] font-bold tracking-wider uppercase shadow-md">
-                    Atelier Commission
+                    Handmade in Gujranwala
                   </span>
                   <span class="px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-brand-line text-brand-ink text-[10px] font-bold tracking-wider uppercase shadow-sm">
                     100% Solid Seasoned Wood
@@ -387,20 +387,20 @@
                 <!-- Commission Pricing Status -->
                 <div class="mt-3 flex flex-wrap items-baseline gap-2.5">
                   <span class="px-3.5 py-1.5 rounded-full bg-brand-sand border border-brand-gold/50 text-brand-gold-dark text-xs font-bold tracking-wide">
-                    Direct Atelier Pricing
+                    Direct Factory Price
                   </span>
-                  <span class="text-xs text-brand-muted font-medium">Custom Sized to Your Blueprint · 3–4 Weeks Crafting</span>
+                  <span class="text-xs text-brand-muted font-medium">Custom Sized for Your Room · 3–4 Weeks Making Time</span>
                 </div>
 
                 <!-- Editorial Description -->
                 <p class="mt-4 text-brand-ink/80 text-sm leading-relaxed font-normal">
-                  ${esc(p.description || 'Masterfully hand-crafted at our Gujranwala atelier using kiln-dried solid seasoned wood and high-resilience upholstery. Customized to your exact dimensions, fabric preferences, and wood finish.')}
+                  ${esc(p.description || 'Handcrafted at our Gujranwala workshop using kiln-dried solid seasoned wood and high-comfort upholstery. Customized to your exact room size, fabric choice, and wood polish.')}
                 </p>
 
                 <!-- CUSTOMIZER SECTION: TIMBER SELECTION -->
                 <div class="mt-6 pt-5 border-t border-brand-line">
                   <div class="flex items-center justify-between mb-2.5">
-                    <span class="eyebrow text-[10px] text-brand-gold-dark tracking-widest uppercase font-bold">1. Select Solid Timber</span>
+                    <span class="eyebrow text-[10px] text-brand-gold-dark tracking-widest uppercase font-bold">1. Select Solid Wood</span>
                     <span id="activeTimberDisplay" class="text-xs text-brand-ink font-bold">${esc(this.currentSelection.timber)}</span>
                   </div>
                   <div class="grid grid-cols-2 gap-2">
@@ -421,7 +421,7 @@
                 <!-- CUSTOMIZER SECTION: UPHOLSTERY SELECTION -->
                 <div class="mt-5">
                   <div class="flex items-center justify-between mb-2.5">
-                    <span class="eyebrow text-[10px] text-brand-gold-dark tracking-widest uppercase font-bold">2. Select Luxury Upholstery</span>
+                    <span class="eyebrow text-[10px] text-brand-gold-dark tracking-widest uppercase font-bold">2. Select Fabric / Color</span>
                     <span id="activeFabricDisplay" class="text-xs text-brand-ink font-bold">${esc(this.currentSelection.fabric)}</span>
                   </div>
                   <div class="flex flex-wrap items-center gap-2">
@@ -440,11 +440,11 @@
                 <!-- ARCHITECTURAL SIZING SPECIFICATION -->
                 <div class="mt-5 p-3.5 rounded-xl bg-brand-sand/70 border border-brand-line text-xs shadow-sm">
                   <div class="flex items-center justify-between text-brand-ink mb-1.5 font-bold">
-                    <span class="text-brand-gold-dark uppercase tracking-wider text-[10px] font-bold">Architectural Dimensions</span>
-                    <span class="text-brand-green font-semibold text-[11px]">Bespoke Sizing Guaranteed</span>
+                    <span class="text-brand-gold-dark uppercase tracking-wider text-[10px] font-bold">Custom Room Sizing</span>
+                    <span class="text-brand-green font-semibold text-[11px]">Made to Your Room Size</span>
                   </div>
                   <div class="text-brand-ink/80 font-normal leading-relaxed">
-                    Standard piece length, seating depth, and back cushion ergonomics are completely tailored to your room blueprint at our Gujranwala workshop.
+                    Total length, depth, and cushion firmness can be customized to match your room size and comfort preference at our Gujranwala workshop.
                   </div>
                 </div>
               </div>
@@ -457,7 +457,7 @@
                    target="_blank" rel="noopener"
                    class="btn-primary-luxury w-full py-4 text-center justify-center text-sm tracking-wider uppercase flex items-center gap-2.5 font-bold shadow-lift">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                  <span>Inquire on WhatsApp with Master Craftsman</span>
+                  <span>Check Price & Details on WhatsApp</span>
                 </a>
 
                 <!-- Secondary Actions -->
@@ -465,7 +465,7 @@
                   <a href="tel:+923294300096"
                      class="px-4 py-3 rounded-xl bg-white border border-brand-line hover:border-brand-gold hover:bg-brand-sand text-brand-ink text-xs font-bold text-center tracking-wide flex items-center justify-center gap-2 transition-all duration-300 shadow-sm">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    <span>Call Concierge</span>
+                    <span>Call Showroom</span>
                   </a>
 
                   <button type="button" data-view-category="${esc(p.category)}"
