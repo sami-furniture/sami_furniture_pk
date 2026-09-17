@@ -191,21 +191,9 @@
           <!-- Interactive Action & Navigation Footer -->
           <div class="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 relative z-10">
 
-            <!-- Stepper Controls (Previous / Next) -->
-            <div class="flex items-center gap-2">
-              <button type="button" id="storyPrevBtn" class="px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold tracking-wider transition-all duration-300 flex items-center gap-2 disabled:opacity-30 disabled:pointer-events-none" aria-label="Previous Craft Rite">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
-                <span>Prev</span>
-              </button>
-
-              <button type="button" id="storyNextBtn" class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-brand-gold/40 bg-brand-gold/15 hover:bg-brand-gold hover:text-brand-noir text-brand-gold text-xs font-semibold tracking-wider transition-all duration-300 flex items-center gap-2 shadow-gold" aria-label="Next Craft Rite">
-                <span>Next Rite</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
-            </div>
-
             <!-- Stage Dots -->
-            <div id="storyDotsContainer" class="flex items-center gap-1.5">
+            <div id="storyDotsContainer" class="flex items-center gap-2">
+              <span class="text-[10px] text-white/40 uppercase tracking-widest font-mono mr-1">Rites:</span>
               <button type="button" class="story-dot w-2.5 h-2.5 rounded-full bg-brand-gold transition-all duration-300" data-dot="0" aria-label="Go to Stage 1"></button>
               <button type="button" class="story-dot w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300" data-dot="1" aria-label="Go to Stage 2"></button>
               <button type="button" class="story-dot w-2.5 h-2.5 rounded-full bg-white/20 transition-all duration-300" data-dot="2" aria-label="Go to Stage 3"></button>

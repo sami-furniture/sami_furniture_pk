@@ -389,6 +389,7 @@
     section.dataset.storyInitialized = 'true';
 
     const mainCard = section.querySelector('#storyMainCard');
+    const tabsTrack = section.querySelector('.story-tabs-track');
     const tabs = section.querySelectorAll('.story-tab-btn');
     const images = section.querySelectorAll('.story-visual-img');
     const progressBar = section.querySelector('#storyProgressBar');
@@ -409,8 +410,6 @@
     const specsContainer = section.querySelector('#storySpecsContainer');
 
     // Control Elements
-    const prevBtn = section.querySelector('#storyPrevBtn');
-    const nextBtn = section.querySelector('#storyNextBtn');
     const dots = section.querySelectorAll('.story-dot');
     const playPauseBtn = section.querySelector('#storyPlayPauseBtn');
     const playIcon = section.querySelector('#storyPlayIcon');
@@ -474,6 +473,7 @@
     let currentActiveIdx = -1;
     let autoTimer = null;
     let isPaused = false;
+    let isSectionInView = false;
 
     function setActiveStage(index) {
       if (index === currentActiveIdx || index < 0 || index >= STAGES_DATA.length) return;
@@ -495,12 +495,15 @@
         }
       });
 
-      // 2. Update Tabs
+      // 2. Update Tabs (Scroll track horizontally ONLY - NEVER touch window scroll)
       tabs.forEach((tab, i) => {
         const isActive = (i === index);
         tab.classList.toggle('active', isActive);
-        if (isActive) {
-          tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if (isActive && tabsTrack) {
+          const trackRect = tabsTrack.getBoundingClientRect();
+          const tabRect = tab.getBoundingClientRect();
+          const scrollTarget = tabsTrack.scrollLeft + (tabRect.left - trackRect.left) - (tabsTrack.clientWidth / 2) + (tab.clientWidth / 2);
+          tabsTrack.scrollTo({ left: scrollTarget, behavior: 'smooth' });
         }
       });
 
@@ -562,25 +565,17 @@
           dot.classList.add('bg-white/20');
         }
       });
-
-      // 7. Update Stepper Buttons
-      if (prevBtn) {
-        prevBtn.disabled = (index === 0);
-      }
-      if (nextBtn) {
-        if (index === STAGES_DATA.length - 1) {
-          nextBtn.innerHTML = '<span>Restart</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>';
-        } else {
-          nextBtn.innerHTML = '<span>Next Rite</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>';
-        }
-      }
     }
 
-    // Auto Advance Mechanism (Pauses on Hover & Touch)
+    // Auto Advance Mechanism (Runs ONLY when Section is in View & Pauses on Hover & Touch)
     function startAutoTimer() {
-      if (isPaused) return;
+      if (isPaused || !isSectionInView) return;
       clearInterval(autoTimer);
       autoTimer = setInterval(() => {
+        if (!isSectionInView) {
+          pauseAutoTimer();
+          return;
+        }
         const next = (currentActiveIdx + 1) % STAGES_DATA.length;
         setActiveStage(next);
       }, 7000);
@@ -588,6 +583,16 @@
 
     function pauseAutoTimer() {
       clearInterval(autoTimer);
+      autoTimer = null;
+    }
+
+    function handleSectionVisibility(inView) {
+      isSectionInView = inView;
+      if (isSectionInView && !isPaused) {
+        startAutoTimer();
+      } else {
+        pauseAutoTimer();
+      }
     }
 
     // Tab Clicks
@@ -596,7 +601,7 @@
         e.preventDefault();
         const targetIdx = parseInt(tab.dataset.stage, 10);
         setActiveStage(targetIdx);
-        startAutoTimer();
+        if (isSectionInView && !isPaused) startAutoTimer();
       });
     });
 
@@ -606,29 +611,9 @@
         e.preventDefault();
         const targetIdx = parseInt(dot.dataset.dot, 10);
         setActiveStage(targetIdx);
-        startAutoTimer();
+        if (isSectionInView && !isPaused) startAutoTimer();
       });
     });
-
-    // Prev / Next Controls
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (currentActiveIdx > 0) {
-          setActiveStage(currentActiveIdx - 1);
-          startAutoTimer();
-        }
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const next = (currentActiveIdx + 1) % STAGES_DATA.length;
-        setActiveStage(next);
-        startAutoTimer();
-      });
-    }
 
     // Play / Pause Auto-Advance Toggle
     if (playPauseBtn) {
@@ -639,7 +624,7 @@
           if (playIcon) playIcon.classList.remove('hidden');
           if (pauseIcon) pauseIcon.classList.add('hidden');
         } else {
-          startAutoTimer();
+          if (isSectionInView) startAutoTimer();
           if (playIcon) playIcon.classList.add('hidden');
           if (pauseIcon) pauseIcon.classList.remove('hidden');
         }
@@ -649,7 +634,7 @@
     // Pause on Mouse Hover
     mainCard.addEventListener('mouseenter', pauseAutoTimer);
     mainCard.addEventListener('mouseleave', () => {
-      if (!isPaused) startAutoTimer();
+      if (!isPaused && isSectionInView) startAutoTimer();
     });
 
     // Touch Swipe Gesture Detection for Mobile & Tablets
@@ -674,24 +659,32 @@
           setActiveStage(currentActiveIdx - 1);
         }
       }
-      if (!isPaused) startAutoTimer();
+      if (!isPaused && isSectionInView) startAutoTimer();
     }, { passive: true });
 
-    // Initial Stage Set
+    // Initial Stage Set (Without triggering page scroll)
     setActiveStage(0);
 
-    // Entrance Animation via ScrollTrigger if available
+    // Section Visibility Tracking via ScrollTrigger & IntersectionObserver
     if (typeof ScrollTrigger !== 'undefined') {
       ScrollTrigger.create({
         trigger: section,
-        start: 'top 75%',
-        once: true,
-        onEnter: () => {
-          startAutoTimer();
-        }
+        start: 'top 85%',
+        end: 'bottom 15%',
+        onEnter: () => handleSectionVisibility(true),
+        onEnterBack: () => handleSectionVisibility(true),
+        onLeave: () => handleSectionVisibility(false),
+        onLeaveBack: () => handleSectionVisibility(false)
       });
-    } else {
-      startAutoTimer();
+    }
+
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          handleSectionVisibility(entry.isIntersecting && entry.intersectionRatio > 0.15);
+        });
+      }, { threshold: [0, 0.15, 0.5] });
+      observer.observe(section);
     }
   }
 
