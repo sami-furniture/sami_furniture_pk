@@ -330,28 +330,28 @@
         stage: '01',
         eyebrow: 'Phase 01 · Raw Material',
         title: 'Kiln-Dried Hardwood Timber',
-        badge: 'Seasoned Hardwood',
+        badge: 'Seasoned Wood',
         mobileText: 'Stage 01: Seasoned Timber'
       },
       {
         stage: '02',
         eyebrow: 'Phase 02 · Master Joinery',
-        title: 'Interlocking Mortise & Tenon',
-        badge: 'Structural Core',
+        title: 'Solid Wood Workshop Assembly',
+        badge: 'Mortise & Tenon',
         mobileText: 'Stage 02: Architectural Joinery'
       },
       {
         stage: '03',
         eyebrow: 'Phase 03 · Hand Polishing',
-        title: 'Artisanal Oil & Lacquer Finish',
-        badge: 'Silky Texture',
+        title: 'Hand-Rubbed Polish & Finish',
+        badge: 'Organic Grain',
         mobileText: 'Stage 03: Artisanal Finishing'
       },
       {
         stage: '04',
-        eyebrow: 'Phase 04 · Haute Upholstery',
-        title: 'Tufted Velvet & High-Density Foam',
-        badge: 'Bespoke Tailoring',
+        eyebrow: 'Phase 04 · Master Upholstery',
+        title: 'Deep Diamond Button Tufting',
+        badge: 'Luxury Tailoring',
         mobileText: 'Stage 04: Luxury Upholstery'
       },
       {
@@ -359,7 +359,7 @@
         eyebrow: 'Phase 05 · Living Sanctuary',
         title: 'Installed in Your Living Space',
         badge: 'Sanctuary Placed',
-        mobileText: 'Stage 05: Home Sanctuary'
+        mobileText: 'Stage 05: Living Sanctuary'
       }
     ];
 
