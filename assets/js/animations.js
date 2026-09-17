@@ -313,21 +313,83 @@
     const steps = section.querySelectorAll('.story-step');
     const images = section.querySelectorAll('.story-visual-img');
     const pill = section.querySelector('#storyStageIndicator');
+    const phaseEyebrow = section.querySelector('#storyPhaseEyebrow');
+    const phaseTitle = section.querySelector('#storyPhaseTitle');
+    const phaseBadge = section.querySelector('#storyPhaseBadge');
+    const stageTabs = section.querySelectorAll('.story-stage-tab');
+
+    // Mobile Tracker Elements
+    const mobileStageText = section.querySelector('#mobileStoryStageText');
+    const mobilePill = section.querySelector('#mobileStoryPill');
+    const mobileSegments = section.querySelectorAll('.mobile-bar-seg');
 
     if (steps.length === 0 || images.length === 0) return;
+
+    const STAGES_DATA = [
+      {
+        stage: '01',
+        eyebrow: 'Phase 01 · Raw Material',
+        title: 'Kiln-Dried Hardwood Timber',
+        badge: 'Seasoned Hardwood',
+        mobileText: 'Stage 01: Seasoned Timber'
+      },
+      {
+        stage: '02',
+        eyebrow: 'Phase 02 · Master Joinery',
+        title: 'Interlocking Mortise & Tenon',
+        badge: 'Structural Core',
+        mobileText: 'Stage 02: Architectural Joinery'
+      },
+      {
+        stage: '03',
+        eyebrow: 'Phase 03 · Hand Polishing',
+        title: 'Artisanal Oil & Lacquer Finish',
+        badge: 'Silky Texture',
+        mobileText: 'Stage 03: Artisanal Finishing'
+      },
+      {
+        stage: '04',
+        eyebrow: 'Phase 04 · Haute Upholstery',
+        title: 'Tufted Velvet & High-Density Foam',
+        badge: 'Bespoke Tailoring',
+        mobileText: 'Stage 04: Luxury Upholstery'
+      },
+      {
+        stage: '05',
+        eyebrow: 'Phase 05 · Living Sanctuary',
+        title: 'Installed in Your Living Space',
+        badge: 'Sanctuary Placed',
+        mobileText: 'Stage 05: Home Sanctuary'
+      }
+    ];
+
+    // Clickable Stage Jump Tabs on Desktop
+    stageTabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetIdx = parseInt(tab.dataset.stage, 10);
+        if (steps[targetIdx]) {
+          const offset = window.innerWidth < 768 ? 90 : 130;
+          const targetY = steps[targetIdx].getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+      });
+    });
 
     // Switch active visual based on scroll (responsive thresholds for mobile and desktop)
     steps.forEach((step, idx) => {
       ScrollTrigger.create({
         trigger: step,
-        start: () => window.innerWidth < 768 ? 'top 75%' : 'top 55%',
-        end: () => window.innerWidth < 768 ? 'bottom 25%' : 'bottom 45%',
+        start: () => window.innerWidth < 768 ? 'top 65%' : 'top 55%',
+        end: () => window.innerWidth < 768 ? 'bottom 35%' : 'bottom 45%',
         onEnter: () => setActiveStep(idx),
         onEnterBack: () => setActiveStep(idx),
       });
     });
 
     function setActiveStep(index) {
+      const data = STAGES_DATA[index] || STAGES_DATA[0];
+
       // 1. Highlight current step bullet & text
       steps.forEach((s, i) => {
         const isActive = (i === index);
@@ -342,9 +404,21 @@
             indicator.classList.add('bg-brand-noir-light', 'text-white/40', 'border-white/10');
           }
         }
+
+        // Highlight mobile visual card
+        const mobileCard = s.querySelector('.mobile-story-card');
+        if (mobileCard) {
+          if (isActive) {
+            mobileCard.classList.remove('border-white/10');
+            mobileCard.classList.add('border-brand-gold/70', 'shadow-gold');
+          } else {
+            mobileCard.classList.remove('border-brand-gold/70', 'shadow-gold');
+            mobileCard.classList.add('border-white/10');
+          }
+        }
       });
 
-      // 2. Cross-fade images smoothly
+      // 2. Cross-fade desktop visual images smoothly
       images.forEach((img, i) => {
         if (i === index) {
           img.style.opacity = '1';
@@ -352,26 +426,45 @@
           img.style.zIndex = '2';
         } else {
           img.style.opacity = '0';
-          img.style.transform = 'scale(1.04)';
+          img.style.transform = 'scale(1.05)';
           img.style.zIndex = '1';
         }
       });
 
-      // 3. Update pill badge: Stage 01 / 05 ... Stage 05 / 05
+      // 3. Update desktop pill badge
       if (pill) {
-        pill.textContent = `Stage 0${index + 1} / 05`;
+        pill.textContent = `Stage ${data.stage} / 05`;
       }
 
-      // 4. Highlight Stage 4 Companion Visual when reaching Stage 5 on desktop
-      const stage4Card = section.querySelector('#stage4CompanionCard');
-      if (stage4Card) {
-        if (index === 4) {
-          stage4Card.classList.add('border-brand-gold', 'shadow-gold', 'scale-[1.02]');
-          stage4Card.classList.remove('border-brand-gold/30');
+      // 4. Update desktop bottom overlay metadata
+      if (phaseEyebrow) phaseEyebrow.textContent = data.eyebrow;
+      if (phaseTitle) phaseTitle.textContent = data.title;
+      if (phaseBadge) phaseBadge.textContent = data.badge;
+
+      // 5. Update desktop stage navigation tabs
+      stageTabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('bg-brand-gold', 'text-brand-noir', 'shadow-gold');
+          tab.classList.remove('bg-white/5', 'text-white/60');
         } else {
-          stage4Card.classList.remove('border-brand-gold', 'shadow-gold', 'scale-[1.02]');
-          stage4Card.classList.add('border-brand-gold/30');
+          tab.classList.remove('bg-brand-gold', 'text-brand-noir', 'shadow-gold');
+          tab.classList.add('bg-white/5', 'text-white/60');
         }
+      });
+
+      // 6. Update mobile sticky progress tracker
+      if (mobileStageText) mobileStageText.textContent = data.mobileText;
+      if (mobilePill) mobilePill.textContent = `${data.stage} / 05`;
+      if (mobileSegments && mobileSegments.length > 0) {
+        mobileSegments.forEach((seg, i) => {
+          if (i <= index) {
+            seg.classList.remove('bg-white/20');
+            seg.classList.add('bg-brand-gold');
+          } else {
+            seg.classList.remove('bg-brand-gold');
+            seg.classList.add('bg-white/20');
+          }
+        });
       }
     }
 
